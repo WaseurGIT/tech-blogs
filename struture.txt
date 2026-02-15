@@ -1,0 +1,16 @@
+src/
+├── pages/
+│   ├── Home.jsx
+│   ├── Blogs.jsx
+│   ├── Login.jsx
+|   |__ Register.jsx    
+│   └── AdminDashboard.jsx
+├── components/
+│   ├── Navbar.jsx
+|   |__ Banner.jsx
+│   ├── Footer.jsx
+│   ├── BlogCard.jsx
+│   └── PrivateRoute.jsx
+├── api/
+│   └── axiosSecure.js
+└── App.jsx
