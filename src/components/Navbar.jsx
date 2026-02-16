@@ -13,7 +13,7 @@ const Navbar = () => {
 
   return (
     <div
-      className={`fixed top-0 left-0 z-20 w-full bg-[var(--bg-navbar)] shadow-md ${theme}`}
+      className={`fixed top-0 left-0 z-20 w-full bg-[var(--bg-navbar)] shadow-md ${theme} container mx-auto px-6 py-4`}
     >
       <div className="max-w-7xl mx-56 flex items-center justify-between px-6 py-4">
         <h1 className="text-2xl font-bold text-[var(--text-primary)]">
