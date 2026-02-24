@@ -1,16 +1,16 @@
-import React, { useContext } from "react";
+import React from "react";
 import Navbar from "./components/Navbar";
 import { Outlet } from "react-router-dom";
-import { ThemeContext } from "./context/ThemeProvider";
 import Footer from "./components/Footer";
 
 const Root = () => {
-  const {theme} = useContext(ThemeContext)
   return (
-    <div className={`w-[1300px] mx-auto ${theme} bg-[var(--bg-primary)] text-[var(--text-primary)]`}>
+    <div className="min-h-screen bg-white text-black">
       <Navbar />
-      <Outlet/>
-      <Footer/>
+      <div className="w-[1300px] mx-auto pt-20">
+        <Outlet />
+        <Footer />
+      </div>
     </div>
   );
 };
