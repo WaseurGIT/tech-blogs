@@ -10,7 +10,20 @@
     "published_date": "2026-01-05",
     "category": "Artificial Intelligence",
     "read_time": "6 min read",
-    "tags": ["AI", "Software Engineering", "Automation"]
+    "tags": ["AI", "Software Engineering", "Automation"],
+    "likes": 125,
+    "comments": [
+      {
+        "id": 1,
+        "author": "John Smith",
+        "text": "Great insights on AI adoption in software development!"
+      },
+      {
+        "id": 2,
+        "author": "Sarah Jones",
+        "text": "This is exactly what our team needs to focus on this year."
+      }
+    ]
   },
   {
     "id": 2,
@@ -23,7 +36,20 @@
     "published_date": "2026-01-12",
     "category": "Web Development",
     "read_time": "8 min read",
-    "tags": ["React", "Frontend", "JavaScript"]
+    "tags": ["React", "Frontend", "JavaScript"],
+    "likes": 98,
+    "comments": [
+      {
+        "id": 1,
+        "author": "Emily Watson",
+        "text": "Perfect explanation of React hooks and their use cases."
+      },
+      {
+        "id": 2,
+        "author": "Michael Chen",
+        "text": "This helped me refactor my component structure significantly."
+      }
+    ]
   },
   {
     "id": 3,
@@ -36,7 +62,20 @@
     "published_date": "2026-01-18",
     "category": "DevOps",
     "read_time": "7 min read",
-    "tags": ["CI/CD", "Cloud", "Automation"]
+    "tags": ["CI/CD", "Cloud", "Automation"],
+    "likes": 142,
+    "comments": [
+      {
+        "id": 1,
+        "author": "David Kim",
+        "text": "DevOps culture is crucial for modern software teams. Well explained!"
+      },
+      {
+        "id": 2,
+        "author": "Lisa Rodriguez",
+        "text": "Finally someone explaining the human side of DevOps, not just tools."
+      }
+    ]
   },
   {
     "id": 4,
@@ -49,7 +88,20 @@
     "published_date": "2026-01-22",
     "category": "Software Engineering",
     "read_time": "9 min read",
-    "tags": ["Microservices", "Backend", "Architecture"]
+    "tags": ["Microservices", "Backend", "Architecture"],
+    "likes": 167,
+    "comments": [
+      {
+        "id": 1,
+        "author": "James Wilson",
+        "text": "Excellent breakdown of microservices trade-offs and benefits!"
+      },
+      {
+        "id": 2,
+        "author": "Amanda Torres",
+        "text": "We're planning to migrate to microservices - this article is very helpful."
+      }
+    ]
   },
   {
     "id": 5,
@@ -62,7 +114,20 @@
     "published_date": "2026-01-28",
     "category": "Artificial Intelligence",
     "read_time": "10 min read",
-    "tags": ["Machine Learning", "Data Science", "AI"]
+    "tags": ["Machine Learning", "Data Science", "AI"],
+    "likes": 189,
+    "comments": [
+      {
+        "id": 1,
+        "author": "Robert Park",
+        "text": "Great overview of ML applications. The model evaluation section was particularly useful."
+      },
+      {
+        "id": 2,
+        "author": "Priya Patel",
+        "text": "Helped me understand how to approach ML projects in my organization."
+      }
+    ]
   },
   {
     "id": 6,
@@ -75,7 +140,20 @@
     "published_date": "2026-02-02",
     "category": "DevOps",
     "read_time": "6 min read",
-    "tags": ["Docker", "Containers", "DevOps"]
+    "tags": ["Docker", "Containers", "DevOps"],
+    "likes": 156,
+    "comments": [
+      {
+        "id": 1,
+        "author": "Chris Anderson",
+        "text": "Best beginner's guide to Docker I've read. Clear and practical examples!"
+      },
+      {
+        "id": 2,
+        "author": "Michelle Lee",
+        "text": "Finally understood how to set up containers correctly for my projects."
+      }
+    ]
   },
   {
     "id": 7,
@@ -88,7 +166,20 @@
     "published_date": "2026-02-05",
     "category": "Web Development",
     "read_time": "5 min read",
-    "tags": ["TypeScript", "JavaScript", "Frontend"]
+    "tags": ["TypeScript", "JavaScript", "Frontend"],
+    "likes": 201,
+    "comments": [
+      {
+        "id": 1,
+        "author": "Kevin Henry",
+        "text": "TypeScript has completely changed how I write JavaScript. Highly recommended!"
+      },
+      {
+        "id": 2,
+        "author": "Sofia Garcia",
+        "text": "This article convinced our team to adopt TypeScript. Great arguments!"
+      }
+    ]
   },
   {
     "id": 8,
@@ -101,7 +192,20 @@
     "published_date": "2026-02-08",
     "category": "DevOps",
     "read_time": "7 min read",
-    "tags": ["CI/CD", "Automation", "Software Delivery"]
+    "tags": ["CI/CD", "Automation", "Software Delivery"],
+    "likes": 134,
+    "comments": [
+      {
+        "id": 1,
+        "author": "Marcus Thompson",
+        "text": "Perfect introduction to CI/CD concepts. Simple yet comprehensive!"
+      },
+      {
+        "id": 2,
+        "author": "Jessica Martinez",
+        "text": "We implemented these practices and our deployment time reduced by 60%!"
+      }
+    ]
   },
   {
     "id": 9,
@@ -114,7 +218,20 @@
     "published_date": "2026-02-10",
     "category": "Software Engineering",
     "read_time": "8 min read",
-    "tags": ["Backend", "Performance", "API"]
+    "tags": ["Backend", "Performance", "API"],
+    "likes": 178,
+    "comments": [
+      {
+        "id": 1,
+        "author": "Ryan Foster",
+        "text": "Applied the caching strategies and our API response time improved dramatically!"
+      },
+      {
+        "id": 2,
+        "author": "Nina Gupta",
+        "text": "This is essential knowledge for any backend developer. Very well written!"
+      }
+    ]
   },
   {
     "id": 10,
@@ -127,6 +244,19 @@
     "published_date": "2026-02-14",
     "category": "Artificial Intelligence",
     "read_time": "6 min read",
-    "tags": ["Chatbots", "NLP", "AI"]
+    "tags": ["Chatbots", "NLP", "AI"],
+    "likes": 192,
+    "comments": [
+      {
+        "id": 1,
+        "author": "Alex Kumar",
+        "text": "The future of customer service is here! Excellent article on AI-powered chatbots."
+      },
+      {
+        "id": 2,
+        "author": "Rachel White",
+        "text": "Just deployed a chatbot in our app. These insights are very timely!"
+      }
+    ]
   }
 ]
