@@ -81,7 +81,7 @@ const Navbar = () => {
                     className="w-8 h-8 sm:w-10 sm:h-10 rounded-full cursor-pointer hover:ring-2 hover:ring-orange-500 transition-all"
                   />
                 ) : (
-                  <h1 className="text-gray-600 font-medium">
+                  <h1 className="text-white font-medium bg-purple-500 text-lg w-8 h-8 sm:w-10 sm:h-10 rounded-full flex items-center justify-center cursor-pointer hover:ring-2 hover:ring-purple-500 transition-all">
                     {user.displayName.charAt(0).toUpperCase()}
                   </h1>
                 )}

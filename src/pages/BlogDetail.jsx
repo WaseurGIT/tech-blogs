@@ -1,21 +1,77 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import { IoArrowBack } from "react-icons/io5";
 import { FaRegComment, FaCalendarAlt } from "react-icons/fa";
 import { IoIosHeartEmpty } from "react-icons/io";
+import { AuthContext } from "../context/AuthProvider";
 
 const BlogDetail = () => {
+  const { user } = useContext(AuthContext);
   const { id } = useParams();
   const [blog, setBlog] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const alreadyLiked = blog?.likedUsers?.includes(user?.email);
+
+  const handleCommentSubmit = async (e) => {
+    e.preventDefault();
+    const commentText = e.target.comment.value.trim();
+    if (!user) {
+      alert("You must be logged in to post a comment.");
+      return;
+    }
+    if (commentText.length === 0) {
+      alert("Comment cannot be empty.");
+      return;
+    }
+    try {
+      const newComment = {
+        author: user.displayName,
+        text: commentText,
+      };
+      const response = await axios.post(
+        `http://localhost:5000/blogs/${id}/comments`,
+        newComment,
+      );
+      setBlog((prevBlog) => ({
+        ...prevBlog,
+        comments: [...(prevBlog.comments || []), response.data],
+      }));
+      e.target.reset();
+    } catch (err) {
+      console.error("Error posting comment:", err);
+      alert("Failed to post comment. Please try again.");
+    }
+  };
+
+  const handleLike = async () => {
+    if (!user) {
+      alert("You must be logged in to like a blog.");
+      return;
+    }
+
+    try {
+      await axios.post(`http://localhost:5000/blogs/${id}/like`, {
+        email: user.email,
+      });
+
+      // ✅ Update likedUsers locally
+      setBlog((prev) => ({
+        ...prev,
+        likedUsers: [...(prev.likedUsers || []), user.email],
+        likes: (prev.likes || 0) + 1,
+      }));
+    } catch (err) {
+      console.error("Error liking blog:", err);
+    }
+  };
 
   useEffect(() => {
     axios
-      .get("/blogs.json")
+      .get(`http://localhost:5000/blogs/${id}`)
       .then((response) => {
-        const foundBlog = response.data.find((b) => b.id === parseInt(id));
+        const foundBlog = response.data.data || response.data; // Handle both cases where data is nested or not
         if (foundBlog) {
           setBlog(foundBlog);
         } else {
@@ -95,13 +151,22 @@ const BlogDetail = () => {
         {/* Stats */}
         <div className="flex flex-wrap gap-4 sm:gap-8">
           <div className="flex items-center gap-2">
-            <IoIosHeartEmpty className="w-5 h-5 text-red-500" />
-            <span className="text-gray-700 font-semibold">{blog.likes} Likes</span>
+            <IoIosHeartEmpty
+              onClick={!alreadyLiked ? handleLike : undefined}
+              className={`w-5 h-5 transition ${
+                alreadyLiked
+                  ? "text-red-500 cursor-not-allowed"
+                  : "text-gray-600 cursor-pointer hover:text-red-600"
+              }`}
+            />
+            <span className={`text-gray-700 font-semibold `}>
+              {blog.likes || 0} Likes
+            </span>
           </div>
           <div className="flex items-center gap-2">
             <FaRegComment className="w-5 h-5 text-blue-500" />
             <span className="text-gray-700 font-semibold">
-              {blog.comments.length} Comments
+              {blog.comments?.length || 0} Comments
             </span>
           </div>
         </div>
@@ -149,39 +214,38 @@ const BlogDetail = () => {
         </div>
       </div>
 
-
       {/* Comments Section */}
       <div>
         <h2 className="text-2xl sm:text-3xl font-bold mb-8 text-gray-900">
-          Comments ({blog.comments.length})
+          Comments ({blog.comments?.length || 0})
         </h2>
 
         <div className="space-y-2">
-          {blog.comments.map((comment) => (
-            <div
-              key={comment.id}
-              className="bg-gray-50 rounded-lg p-2 border border-gray-200 hover:shadow-md transition"
-            >
-              <div className="flex items-start gap-4 mb-3">
-                {/* Placeholder for comment profile image */}
-                <div className="flex-shrink-0">
-                  <div className="w-8 h-8 sm:w-8 sm:h-8 bg-gradient-to-br from-orange-300 to-orange-400 rounded-full flex items-center justify-center text-white font-bold text-sm">
-                    {comment.author.charAt(0).toUpperCase()}
+          {blog.comments
+            ?.filter((comment) => comment !== null)
+            .map((comment, index) => (
+              <div
+                key={comment.id || index}
+                className="bg-gray-50 rounded-lg p-2 border border-gray-200 hover:shadow-md transition"
+              >
+                <div className="flex items-start gap-4 mb-3">
+                  {/* Placeholder for comment profile image */}
+                  <div className="flex-shrink-0">
+                    <div className="w-8 h-8 sm:w-8 sm:h-8 bg-gradient-to-br from-orange-300 to-orange-400 rounded-full flex items-center justify-center text-white font-bold text-sm">
+                      {comment.author?.charAt(0)?.toUpperCase() || "U"}
+                    </div>
+                  </div>
+
+                  {/* Comment Content */}
+                  <div className="flex-grow">
+                    <h3 className="font-semibold text-base sm:text-sm text-gray-900">
+                      {comment.author}
+                    </h3>
+                    <p className="text-sm">{comment.text}</p>
                   </div>
                 </div>
-
-                {/* Comment Content */}
-                <div className="flex-grow">
-                  <h3 className="font-semibold text-base sm:text-sm text-gray-900">
-                    {comment.author}
-                  </h3>
-                  <p className="text-sm">
-                    {comment.text}
-                  </p>
-                </div>
               </div>
-            </div>
-          ))}
+            ))}
         </div>
 
         {/* Add Comment Section */}
@@ -189,7 +253,7 @@ const BlogDetail = () => {
           <h3 className="text-lg sm:text-xl font-bold mb-4 text-gray-900">
             Leave a Comment
           </h3>
-          <form className="space-y-4">
+          <form onSubmit={handleCommentSubmit} className="space-y-4">
             <div>
               <textarea
                 placeholder="Your Comment"
@@ -200,7 +264,7 @@ const BlogDetail = () => {
             </div>
             <button
               type="submit"
-              className="bg-orange-500 hover:bg-orange-600 text-white font-semibold py-2 sm:py-3 px-6 sm:px-8 rounded-lg transition text-sm sm:text-base"
+              className={`bg-orange-500 hover:bg-orange-600 text-white font-semibold py-2 sm:py-3 px-6 sm:px-8 rounded-lg transition text-sm sm:text-base ${user ? "" : "cursor-not-allowed"}`}
             >
               Post Comment
             </button>

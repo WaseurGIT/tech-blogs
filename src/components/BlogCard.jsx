@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 
 const BlogCard = ({ blog }) => {
   return (
-    <Link to={`/blogs/${blog.id}`}>
+    <Link to={`/blogs/${blog._id}`}>
       <div className="cursor-pointer border-2 rounded-lg sm:rounded-xl md:rounded-2xl mb-4 sm:mb-6 hover:shadow-lg transition-shadow duration-200">
         <div className="">
           <div className="relative">

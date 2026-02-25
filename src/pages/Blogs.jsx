@@ -16,7 +16,7 @@ const Blogs = () => {
   ];
 
   const handleCategories = (category) => {
-    axios.get("/blogs.json").then((res) => {
+    axios.get("http://localhost:5000/blogs").then((res) => {
       const filteredBlogs =
         category === "All"
           ? res.data.data || res.data
@@ -29,7 +29,7 @@ const Blogs = () => {
 
   useEffect(() => {
     axios
-      .get("/blogs.json")
+      .get("http://localhost:5000/blogs")
       .then((response) => {
         setBlogs(response.data);
       })
