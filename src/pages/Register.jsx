@@ -4,6 +4,7 @@ import { AuthContext } from "../context/AuthProvider";
 import Swal from "sweetalert2";
 import { FcGoogle } from "react-icons/fc";
 import { FiCheck, FiEye, FiEyeOff, FiX } from "react-icons/fi";
+import axios from "axios";
 
 export default function Register() {
   const { createUser, googleLogin, loading } = useContext(AuthContext);
@@ -38,7 +39,13 @@ export default function Register() {
     }
 
     try {
-      await createUser(email, password, name);
+      const result = await createUser(email, password, name);
+      const userData = {
+        name: result.user.displayName,
+        email: result.user.email,
+        uid: result.user.uid,
+      };
+      await axios.post("http://localhost:5000/users", userData);
       Swal.fire({
         toast: true,
         position: "top-end",
@@ -62,6 +69,12 @@ export default function Register() {
   const handleGoogleRegister = async () => {
     try {
       const res = await googleLogin();
+      const userData = {
+        name: res.user.displayName || "",
+        email: res.user.email,
+        uid: res.user.uid,
+      };
+      await axios.post("http://localhost:5000/users", userData);
       Swal.fire({
         toast: true,
         position: "top-end",
@@ -167,7 +180,9 @@ export default function Register() {
                   )}
                   <span
                     className={
-                      passwordState.length < 6 ? "text-red-500" : "text-green-500"
+                      passwordState.length < 6
+                        ? "text-red-500"
+                        : "text-green-500"
                     }
                   >
                     At least 6 characters

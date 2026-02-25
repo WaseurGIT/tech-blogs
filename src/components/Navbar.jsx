@@ -81,7 +81,9 @@ const Navbar = () => {
                     className="w-8 h-8 sm:w-10 sm:h-10 rounded-full cursor-pointer hover:ring-2 hover:ring-orange-500 transition-all"
                   />
                 ) : (
-                  <IoPersonCircle className="text-2xl sm:text-3xl text-gray-400 hover:text-gray-600 cursor-pointer transition-colors duration-200" />
+                  <h1 className="text-gray-600 font-medium">
+                    {user.displayName.charAt(0).toUpperCase()}
+                  </h1>
                 )}
               </div>
               <button

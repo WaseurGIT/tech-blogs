@@ -3,12 +3,11 @@ import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthProvider";
 import Swal from "sweetalert2";
 import { FcGoogle } from "react-icons/fc";
+import axios from "axios";
 
 export default function Login() {
   const { loginUser, googleLogin, loading } = useContext(AuthContext);
-
   const [error, setError] = useState("");
-
   const navigate = useNavigate();
 
   const handleLogin = async (e) => {
@@ -18,6 +17,12 @@ export default function Login() {
     const password = form.password.value;
     try {
       const result = await loginUser(email, password);
+      const userData = {
+        name: result.user.displayName,
+        email: result.user.email,
+        uid: result.user.uid,
+      };
+      await axios.post("http://localhost:5000/users", userData);
       Swal.fire({
         toast: true,
         position: "top-end",
@@ -42,6 +47,12 @@ export default function Login() {
   const handleGoogleLogin = async () => {
     try {
       const res = await googleLogin();
+      const userData = {
+        name: res.user.displayName || "",
+        email: res.user.email,
+        uid: res.user.uid,
+      };
+      await axios.post("http://localhost:5000/users", userData);
       Swal.fire({
         toast: true,
         position: "top-end",
