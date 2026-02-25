@@ -1,5 +1,6 @@
 import React from "react";
 import { IoPersonCircle } from "react-icons/io5";
+import { Link } from "react-router-dom";
 
 const Navbar = () => {
   const links = [
@@ -13,9 +14,9 @@ const Navbar = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 sm:py-4 flex items-center justify-between">
         {/* Logo */}
         <div className="flex-shrink-0">
-          <h1 className="text-xl sm:text-2xl font-bold whitespace-nowrap">
+          <Link to="/" className="text-xl sm:text-2xl font-bold whitespace-nowrap">
             Blog<span className="text-orange-500">i</span>fy
-          </h1>
+          </Link>
         </div>
 
         {/* Navigation Links */}
@@ -41,6 +42,12 @@ const Navbar = () => {
         {/* User Profile */}
         <div className="flex items-center gap-2 sm:gap-4">
           <IoPersonCircle className="text-2xl sm:text-3xl text-gray-400 hover:text-gray-600 cursor-pointer transition-colors duration-200" />
+          <Link
+            to="/login"
+            className="text-gray-600 hover:text-gray-900 font-medium text-sm"
+          >
+            Login
+          </Link>
         </div>
       </div>
     </nav>

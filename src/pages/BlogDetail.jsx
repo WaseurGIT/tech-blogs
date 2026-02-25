@@ -118,17 +118,12 @@ const BlogDetail = () => {
 
       {/* Content with Image Section */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 lg:gap-12 mb-12 sm:mb-16 lg:mb-20">
-        {/* First Half Content */}
         <div>
-          <h2 className="text-lg sm:text-xl md:text-2xl font-bold mb-4 text-gray-900">
-            Overview
-          </h2>
           <p className="text-sm sm:text-base text-gray-700 leading-relaxed mb-4">
             {blog.content.substring(0, blog.content.length / 2)}
           </p>
         </div>
 
-        {/* First Image */}
         <div>
           <img
             src={blog.image_two}
@@ -138,9 +133,7 @@ const BlogDetail = () => {
         </div>
       </div>
 
-      {/* Content with Image Section 2 */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 lg:gap-12 mb-12 sm:mb-16 lg:mb-20">
-        {/* Second Image */}
         <div className="order-2 lg:order-1">
           <img
             src={blog.image_one}
@@ -149,30 +142,13 @@ const BlogDetail = () => {
           />
         </div>
 
-        {/* Second Half Content */}
         <div className="order-1 lg:order-2">
-          <h2 className="text-lg sm:text-xl md:text-2xl font-bold mb-4 text-gray-900">
-            Key Points
-          </h2>
           <p className="text-sm sm:text-base text-gray-700 leading-relaxed mb-4">
             {blog.content.substring(blog.content.length / 2)}
           </p>
         </div>
       </div>
 
-      {/* Tags */}
-      <div className="mb-12 sm:mb-16 lg:mb-20 py-6 sm:py-8 border-y border-gray-200">
-        <div className="flex flex-wrap gap-3">
-          {blog.tags.map((tag, index) => (
-            <button
-              key={index}
-              className="bg-gray-100 hover:bg-gray-200 text-gray-700 px-4 py-2 rounded-lg text-sm font-medium transition"
-            >
-              #{tag}
-            </button>
-          ))}
-        </div>
-      </div>
 
       {/* Comments Section */}
       <div>
@@ -180,26 +156,26 @@ const BlogDetail = () => {
           Comments ({blog.comments.length})
         </h2>
 
-        <div className="space-y-6 sm:space-y-8">
+        <div className="space-y-2">
           {blog.comments.map((comment) => (
             <div
               key={comment.id}
-              className="bg-gray-50 rounded-lg p-4 sm:p-6 border border-gray-200 hover:shadow-md transition"
+              className="bg-gray-50 rounded-lg p-2 border border-gray-200 hover:shadow-md transition"
             >
               <div className="flex items-start gap-4 mb-3">
                 {/* Placeholder for comment profile image */}
                 <div className="flex-shrink-0">
-                  <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-orange-400 to-orange-600 rounded-full flex items-center justify-center text-white font-bold text-sm">
+                  <div className="w-8 h-8 sm:w-8 sm:h-8 bg-gradient-to-br from-orange-300 to-orange-400 rounded-full flex items-center justify-center text-white font-bold text-sm">
                     {comment.author.charAt(0).toUpperCase()}
                   </div>
                 </div>
 
                 {/* Comment Content */}
                 <div className="flex-grow">
-                  <h3 className="font-bold text-base sm:text-lg text-gray-900">
+                  <h3 className="font-semibold text-base sm:text-sm text-gray-900">
                     {comment.author}
                   </h3>
-                  <p className="text-sm sm:text-base text-gray-700 leading-relaxed">
+                  <p className="text-sm">
                     {comment.text}
                   </p>
                 </div>
@@ -217,6 +193,7 @@ const BlogDetail = () => {
             <div>
               <textarea
                 placeholder="Your Comment"
+                name="comment"
                 rows="4"
                 className="w-full px-4 py-2 sm:py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 text-sm sm:text-base"
               ></textarea>

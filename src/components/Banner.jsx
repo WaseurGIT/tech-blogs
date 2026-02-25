@@ -3,7 +3,7 @@ import { IoArrowForward } from "react-icons/io5";
 
 const Banner = () => {
   return (
-    <div className="relative w-full h-screen md:h-[600px] lg:h-[700px] flex items-center justify-center overflow-hidden">
+    <div className="relative w-full h-screen md:h-[600px] lg:h-[700px] flex items-center justify-center overflow-hidden mb-20">
       {/* Background Image with Overlay */}
       <div
         className="absolute inset-0 bg-cover bg-center bg-no-repeat"

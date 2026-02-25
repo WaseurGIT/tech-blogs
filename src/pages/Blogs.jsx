@@ -39,7 +39,7 @@ const Blogs = () => {
   }, []);
 
   return (
-    <div className="my-12 sm:my-20 lg:my-36">
+    <div className="mb-12 sm:mb-20 lg:mb-36">
       <div className="flex justify-center mb-6 sm:mb-8 lg:mb-12 px-4">
         <div className="flex flex-wrap gap-2 sm:gap-3 lg:gap-4 justify-center">
           {categories.map((category) => (
