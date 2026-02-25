@@ -10,8 +10,8 @@ import {
 import React, { createContext, useEffect, useState } from "react";
 import { auth } from "../firebase/firebase.config";
 
-const AuthContext = createContext();
-const googleProvider = GoogleAuthProvider()
+export const AuthContext = createContext();
+const googleProvider = new GoogleAuthProvider();
 
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
@@ -35,23 +35,21 @@ const AuthProvider = ({ children }) => {
     return await signOut(auth);
   };
 
-  const googleLogin = async()=>{
-    return await signInWithPopup(auth, googleProvider)
-  }
+  const googleLogin = async () => {
+    return await signInWithPopup(auth, googleProvider);
+  };
 
-  useEffect(()=>{
-    const unSubscribe = onAuthStateChanged(auth, (currentUser)=>{
-      if(currentUser){
-        try {
-          setUser(currentUser);
-        } catch (error) {
-          setUser(null)
-          console.error("Error setting user:", error);
-        }
+  useEffect(() => {
+    const unSubscribe = onAuthStateChanged(auth, (currentUser) => {
+      try {
+        setUser(currentUser);
+      } catch (error) {
+        setUser(null);
+        console.error("Error setting user:", error);
       }
-    })
-    return ()=> unSubscribe()
-  },[])
+    });
+    return () => unSubscribe();
+  }, []);
 
   const authInfo = {
     user,
@@ -59,7 +57,7 @@ const AuthProvider = ({ children }) => {
     createUser,
     loginUser,
     logOut,
-    googleLogin
+    googleLogin,
   };
 
   return (
