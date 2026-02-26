@@ -1,7 +1,7 @@
 import React from "react";
 import { CiBookmark } from "react-icons/ci";
 import { FaRegComment } from "react-icons/fa";
-import { IoIosHeartEmpty, IoIosShareAlt } from "react-icons/io";
+import { IoIosHeart } from "react-icons/io";
 import { PiShareFatLight } from "react-icons/pi";
 import { Link } from "react-router-dom";
 
@@ -32,12 +32,14 @@ const BlogCard = ({ blog }) => {
           </div>
           <div className="flex items-center justify-between sm:justify-around my-2 sm:my-3 px-2 sm:px-0">
             <div className="flex items-center gap-1">
-              <IoIosHeartEmpty className="w-5 h-5 sm:w-6 sm:h-6 cursor-pointer hover:text-red-500 transition" />
+              <IoIosHeart className="w-5 h-5 sm:w-6 sm:h-6 cursor-pointer hover:text-red-500 transition" />
               <span className="text-sm sm:text-base">{blog.likes}</span>
             </div>
             <div className="flex items-center gap-1">
               <FaRegComment className="w-5 h-5 sm:w-6 sm:h-6 cursor-pointer hover:text-blue-500 transition" />
-              <span className="text-sm sm:text-base">{blog.comments.length}</span>
+              <span className="text-sm sm:text-base">
+                {blog.comments.length}
+              </span>
             </div>
             <CiBookmark className="w-5 h-5 sm:w-6 sm:h-6 cursor-pointer hover:text-orange-500 transition" />
             <PiShareFatLight className="w-5 h-5 sm:w-6 sm:h-6 cursor-pointer hover:text-green-500 transition" />

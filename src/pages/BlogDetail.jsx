@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import { IoArrowBack } from "react-icons/io5";
 import { FaRegComment, FaCalendarAlt } from "react-icons/fa";
-import { IoIosHeartEmpty } from "react-icons/io";
+import { IoIosHeart } from "react-icons/io";
 import { AuthContext } from "../context/AuthProvider";
 
 const BlogDetail = () => {
@@ -151,7 +151,7 @@ const BlogDetail = () => {
         {/* Stats */}
         <div className="flex flex-wrap gap-4 sm:gap-8">
           <div className="flex items-center gap-2">
-            <IoIosHeartEmpty
+            <IoIosHeart
               onClick={!alreadyLiked ? handleLike : undefined}
               className={`w-5 h-5 transition ${
                 alreadyLiked
@@ -182,31 +182,22 @@ const BlogDetail = () => {
       </div>
 
       {/* Content with Image Section */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 lg:gap-12 mb-12 sm:mb-16 lg:mb-20">
+      <div className="mb-12 sm:mb-16 lg:mb-20">
         <div>
           <p className="text-sm sm:text-base text-gray-700 leading-relaxed mb-4">
             {blog.content.substring(0, blog.content.length / 2)}
           </p>
         </div>
-
-        <div>
-          <img
-            src={blog.image_two}
-            alt={`${blog.title} - Image 1`}
-            className="w-full h-64 sm:h-80 object-cover rounded-lg shadow-lg"
-          />
-        </div>
+      </div>
+      <div>
+        <img
+          src={blog.image_two}
+          alt={`${blog.title} - Image 1`}
+          className="w-full h-64 sm:h-80 object-cover rounded-lg shadow-lg"
+        />
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 lg:gap-12 mb-12 sm:mb-16 lg:mb-20">
-        <div className="order-2 lg:order-1">
-          <img
-            src={blog.image_one}
-            alt={`${blog.title} - Image 2`}
-            className="w-full h-64 sm:h-80 object-cover rounded-lg shadow-lg"
-          />
-        </div>
-
+      <div className="mt-5 mb-12 sm:mb-16 lg:mb-20">
         <div className="order-1 lg:order-2">
           <p className="text-sm sm:text-base text-gray-700 leading-relaxed mb-4">
             {blog.content.substring(blog.content.length / 2)}
