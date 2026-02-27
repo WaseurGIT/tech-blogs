@@ -48,8 +48,10 @@ const Navbar = () => {
   const links = [
     { path: "/", label: "Home" },
     { path: "/blogs", label: "Blogs" },
-    { path: "/saved", label: "Saved" },
-    { path: "/profile", label: "Profile" },
+    ...(user ? [
+      { path: "/savedBlogs", label: "Saved" },
+      { path: "/profile", label: "Profile" },
+    ] : []),
   ];
 
   return (

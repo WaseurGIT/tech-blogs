@@ -5,28 +5,15 @@ import { IoArrowBack } from "react-icons/io5";
 import { FaRegComment, FaCalendarAlt } from "react-icons/fa";
 import { IoIosHeart } from "react-icons/io";
 import { AuthContext } from "../context/AuthProvider";
+import Swal from "sweetalert2";
 
 const BlogDetail = () => {
   const { user } = useContext(AuthContext);
-  const [userData, setUserData] = useState(null);
   const { id } = useParams();
   const [blog, setBlog] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const alreadyLiked = blog?.likedUsers?.includes(user?.email);
-
-  useEffect(() => {
-    if (user?.email) {
-      axios
-        .get(`http://localhost:5000/userData/${user.email}`)
-        .then((res) => {
-          setUserData(res.data);
-        })
-        .catch((err) => {
-          console.error(err);
-        });
-    }
-  }, [user]);
 
   const handleCommentSubmit = async (e) => {
     e.preventDefault();
@@ -99,6 +86,45 @@ const BlogDetail = () => {
       });
   }, [id]);
 
+  const handleDelete = async () => {
+    if (!user) {
+      alert("You must be logged in to delete a blog.");
+      return;
+    }
+
+    const result = await Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
+      confirmButtonText: "Yes, delete it!",
+      cancelButtonText: "Cancel",
+    });
+
+    if (result.isConfirmed) {
+      try {
+        await axios.delete(`http://localhost:5000/blogs/${id}`, {
+          data: { email: user.email },
+        });
+        Swal.fire({
+          title: "Deleted!",
+          text: "Your blog has been deleted.",
+          icon: "success",
+        });
+        window.history.back();
+      } catch (err) {
+        console.error("Error deleting blog:", err);
+        Swal.fire({
+          title: "Error!",
+          text: "Failed to delete blog.",
+          icon: "error",
+        });
+      }
+    }
+  };
+
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-screen">
@@ -158,12 +184,12 @@ const BlogDetail = () => {
         <div className="flex items-center gap-4 mb-8 sm:mb-12">
           <img
             src={
-              userData?.profilePicture
-                ? `http://localhost:5000/uploads/${userData.profilePicture}`
-                : null
+              blog.authorImage
+                ? blog.authorImage
+                : "https://via.placeholder.com/150"
             }
-            // alt={user.displayName}
-            className="w-10 h-10 sm:w-10 sm:h-10 rounded-full cursor-pointer hover:ring-2 hover:ring-orange-500 transition-all"
+            alt={blog.author}
+            className="w-10 h-10 rounded-full"
           />
           <div>
             <p className="font-bold text-base sm:text-lg text-blue-500">
@@ -279,12 +305,20 @@ const BlogDetail = () => {
             </div>
             <button
               type="submit"
-              className={`bg-orange-500 hover:bg-orange-600 text-white font-semibold py-2 sm:py-3 px-6 sm:px-8 rounded-lg transition text-sm sm:text-base ${user ? "" : "cursor-not-allowed"}`}
+              className={`bg-blue-500 hover:bg-blue-600 cursor-pointer text-white font-semibold py-2 sm:py-3 px-6 sm:px-8 rounded-lg transition text-sm sm:text-base ${user ? "" : "cursor-not-allowed"}`}
             >
               Post Comment
             </button>
           </form>
         </div>
+      </div>
+      <div>
+        <button
+          onClick={handleDelete}
+          className="bg-red-500 text-white py-3 w-full mt-3 rounded-xl font-semibold hover:bg-red-600 transition cursor-pointer"
+        >
+          Delete Blog
+        </button>
       </div>
     </div>
   );

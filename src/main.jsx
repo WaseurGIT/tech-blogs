@@ -14,6 +14,7 @@ import AuthProvider from "./context/AuthProvider.jsx";
 import UserProfile from "./pages/UserProfile.jsx";
 import UserDataUpdateForm from "./pages/UserDataUpdateForm.jsx";
 import CreateBlog from "./pages/CreateBlog.jsx";
+import SavedBlogs from "./pages/SavedBlogs.jsx";
 
 const router = createBrowserRouter([
   {
@@ -51,6 +52,10 @@ const router = createBrowserRouter([
       {
         path: "/createBlog",
         element: <CreateBlog />,
+      },
+      {
+        path: '/savedBlogs',
+        element: <SavedBlogs />,
       }
     ],
   },

@@ -36,6 +36,19 @@ const UserProfile = () => {
       });
   }, [user]);
 
+  useEffect(() => {
+    if (!user?.email) return;
+
+    axios
+      .get(`http://localhost:5000/blogs/user/${user.email}`)
+      .then((res) => {
+        setUserPosts(res.data);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  }, [user]);
+
   return (
     <div className="min-h-screen bg-gray-50">
       <div className="relative w-full h-64 md:h-80 bg-gray-300 overflow-hidden">

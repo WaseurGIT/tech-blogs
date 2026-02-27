@@ -6,6 +6,7 @@ import { PiShareFatLight } from "react-icons/pi";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../context/AuthProvider";
 import axios from "axios";
+import Swal from "sweetalert2";
 
 const BlogCard = ({ blog }) => {
   const { user } = useContext(AuthContext);
@@ -23,6 +24,42 @@ const BlogCard = ({ blog }) => {
         });
     }
   }, [user]);
+
+  const handleSavedBlog = async (e) => {
+    e.preventDefault();
+
+    if (!user) {
+      alert("Please log in to save blogs.");
+      return;
+    }
+
+    try {
+      await axios.post("http://localhost:5000/savedBlogs", {
+        userEmail: user.email,
+        blogId: blog._id,
+      });
+
+      Swal.fire({
+        title: "Saved!",
+        text: "Blog has been saved to your profile.",
+        icon: "success",
+      });
+    } catch (err) {
+      if (err.response?.status === 409) {
+        Swal.fire({
+          title: "Already Saved",
+          text: "You already saved this blog.",
+          icon: "info",
+        });
+      } else {
+        Swal.fire({
+          title: "Error!",
+          text: "Failed to save blog.",
+          icon: "error",
+        });
+      }
+    }
+  };
 
   if (!blog) {
     return <div>No blog data available</div>;
@@ -42,14 +79,19 @@ const BlogCard = ({ blog }) => {
               {blog.category}
             </span>
             <div className="absolute bottom-2 left-2 flex items-center gap-2 w-full pr-4">
-              <img
+              {/* <img
                 src={
-                  userData?.profilePicture
-                    ? `http://localhost:5000/uploads/${userData.profilePicture}`
-                    : null
+                  blog.authorImage
+                    ? blog.authorImage
+                    : "https://via.placeholder.com/150"
                 }
-                alt={user?.displayName}
-                className="w-10 h-10 sm:w-10 sm:h-10 rounded-full cursor-pointer hover:ring-2 hover:ring-orange-500 transition-all"
+                alt={blog.author}
+                className="w-10 h-10 rounded-full"
+              /> */}
+              <img
+                src={`http://localhost:5000/uploads/${blog.authorImage}`}
+                alt={blog.author}
+                className="w-10 h-10 rounded-full"
               />
               <h1 className="text-white font-bold text-xs sm:text-lg md:text-xl truncate">
                 {blog.title}
@@ -67,7 +109,10 @@ const BlogCard = ({ blog }) => {
                 {blog.comments?.length || 0}
               </span>
             </div>
-            <CiBookmark className="w-5 h-5 sm:w-6 sm:h-6 cursor-pointer hover:text-orange-500 transition" />
+            <CiBookmark
+              onClick={handleSavedBlog}
+              className="w-5 h-5 sm:w-6 sm:h-6 cursor-pointer hover:text-orange-500 transition"
+            />
             <PiShareFatLight className="w-5 h-5 sm:w-6 sm:h-6 cursor-pointer hover:text-green-500 transition" />
           </div>
         </div>
