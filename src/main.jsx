@@ -15,11 +15,13 @@ import UserProfile from "./pages/UserProfile.jsx";
 import UserDataUpdateForm from "./pages/UserDataUpdateForm.jsx";
 import CreateBlog from "./pages/CreateBlog.jsx";
 import SavedBlogs from "./pages/SavedBlogs.jsx";
+import Error from "./pages/Error.jsx";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Root />,
+    errorElement: <Error/>,
     children: [
       {
         path: "/",
