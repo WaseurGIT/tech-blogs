@@ -3,7 +3,6 @@ import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthProvider";
 import Swal from "sweetalert2";
 import { FcGoogle } from "react-icons/fc";
-import axios from "axios";
 import axiosSecure from "../api/axiosSecure";
 
 export default function Login() {
