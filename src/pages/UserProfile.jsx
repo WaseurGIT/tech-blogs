@@ -1,41 +1,46 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import BlogCard from "../components/BlogCard";
 import { AuthContext } from "../context/AuthProvider";
+import { Link } from "react-router-dom";
+import axios from "axios";
 
 const UserProfile = () => {
   const { user } = useContext(AuthContext);
-  const [userData, setUserData] = useState({
-    name: user?.displayName,
-    profession: "Full Stack Developer",
-    coverImage:
-      "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=1200&h=300&fit=crop",
-    profileImage:
-      "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&h=400&fit=crop",
-    bio: "Passionate about building beautiful and functional web applications.",
-  });
 
+  const [userData, setUserData] = useState({
+    name: "",
+    profession: "",
+    bio: "",
+    coverImage: "",
+    profileImage: "",
+  });
   const [userPosts, setUserPosts] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchUserPosts = async () => {
-      try {
-        setUserPosts([]);
-      } catch (error) {
-        console.error("Error fetching posts:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
+    if (!user?.email) return;
 
-    fetchUserPosts();
-  }, []);
+    axios
+      .get(`http://localhost:5000/userData/${user.email}`)
+      .then((res) => {
+        if (res.data) {
+          setUserData(res.data);
+        } else {
+          setUserData(null);
+        }
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.error(err);
+        setLoading(false);
+      });
+  }, [user]);
 
   return (
     <div className="min-h-screen bg-gray-50">
       <div className="relative w-full h-64 md:h-80 bg-gray-300 overflow-hidden">
         <img
-          src={userData.coverImage}
+          src={`http://localhost:5000/uploads/${userData?.coverImage}`}
           alt="Cover"
           className="w-full h-full object-cover"
         />
@@ -49,24 +54,25 @@ const UserProfile = () => {
             {/* Profile Image */}
             <div className="flex justify-center md:justify-start">
               <img
-                src={userData.profileImage}
-                alt={userData.name}
+                // src={userData.profileImage}
+                src={`http://localhost:5000/uploads/${userData?.profilePicture}`}
+                alt={userData?.name}
                 className="w-40 h-40 rounded-full border-4 border-white shadow-lg object-cover"
               />
               <div className="absolute bottom-0 left-20 bg-white px-2 rounded-lg mb-2 cursor-pointer">
-                <h1>Edit Profile</h1>
+                <Link to="/updateProfileData">Edit Profile</Link>
               </div>
             </div>
 
             {/* User Info */}
             <div className="mt-6 md:mt-26 md:pb-2 text-center md:text-left flex-1">
               <h1 className="text-3xl md:text-4xl font-bold text-gray-800">
-                {userData.name}
+                {user?.displayName}
               </h1>
               <p className="text-xl text-blue-600 font-semibold mt-1">
-                {userData.profession}
+                {userData?.profession}
               </p>
-              <p className="text-gray-600 mt-3 max-w-lg">{userData.bio}</p>
+              <p className="text-gray-600 mt-3 max-w-lg">{userData?.bio}</p>
             </div>
           </div>
         </div>
