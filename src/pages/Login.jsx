@@ -4,6 +4,7 @@ import { AuthContext } from "../context/AuthProvider";
 import Swal from "sweetalert2";
 import { FcGoogle } from "react-icons/fc";
 import axios from "axios";
+import axiosSecure from "../api/axiosSecure";
 
 export default function Login() {
   const { loginUser, googleLogin, loading } = useContext(AuthContext);
@@ -22,10 +23,10 @@ export default function Login() {
         email: result.user.email,
         uid: result.user.uid,
       };
-      await axios.post("/users", userData);
+      await axiosSecure.post("/users", userData);
 
       //  request JWT token from backend
-      const tokenRes = await axios.post("/jwt", {
+      const tokenRes = await axiosSecure.post("/jwt", {
         email: result.user.email,
       });
       // store token in localStorage
@@ -59,10 +60,10 @@ export default function Login() {
         email: res.user.email,
         uid: res.user.uid,
       };
-      await axios.post("/users", userData);
+      await axiosSecure.post("/users", userData);
 
       // get JWT
-      const tokenRes = await axios.post("/jwt", {
+      const tokenRes = await axiosSecure.post("/jwt", {
         email: res.user.email,
       });
 

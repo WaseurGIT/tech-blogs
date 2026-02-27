@@ -9,11 +9,13 @@ import {
 } from "firebase/auth";
 import React, { createContext, useEffect, useState } from "react";
 import { auth } from "../firebase/firebase.config";
+import axiosSecure from "../api/axiosSecure";
 
 export const AuthContext = createContext();
 const googleProvider = new GoogleAuthProvider();
 
 const AuthProvider = ({ children }) => {
+  const [role, setRole] = useState(null);
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(false);
 
@@ -51,6 +53,14 @@ const AuthProvider = ({ children }) => {
     return () => unSubscribe();
   }, []);
 
+  useEffect(() => {
+    if (user?.email) {
+      axiosSecure.get(`/users/${user.email}`).then((res) => {
+        setRole(res.data.role);
+      });
+    }
+  }, [user]);
+
   const authInfo = {
     user,
     loading,
@@ -58,6 +68,7 @@ const AuthProvider = ({ children }) => {
     loginUser,
     logOut,
     googleLogin,
+    role,
   };
 
   return (

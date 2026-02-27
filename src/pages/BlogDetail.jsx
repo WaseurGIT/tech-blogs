@@ -8,7 +8,7 @@ import Swal from "sweetalert2";
 import axiosSecure from "../api/axiosSecure";
 
 const BlogDetail = () => {
-  const { user } = useContext(AuthContext);
+  const { user, role } = useContext(AuthContext);
   const { id } = useParams();
   const [blog, setBlog] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -312,14 +312,16 @@ const BlogDetail = () => {
           </form>
         </div>
       </div>
-      <div>
-        <button
-          onClick={handleDelete}
-          className="bg-red-500 text-white py-3 w-full mt-3 rounded-xl font-semibold hover:bg-red-600 transition cursor-pointer"
-        >
-          Delete Blog
-        </button>
-      </div>
+      {role === "admin" && (
+        <div>
+          <button
+            onClick={handleDelete}
+            className="bg-red-500 text-white py-3 w-full mt-3 rounded-xl font-semibold hover:bg-red-600 transition cursor-pointer"
+          >
+            Delete Blog
+          </button>
+        </div>
+      )}
     </div>
   );
 };
