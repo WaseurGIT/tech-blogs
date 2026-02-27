@@ -1,12 +1,12 @@
-import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
 import BlogCard from "../components/BlogCard";
 import add1 from "../assets/ad_1.jpg";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../context/AuthProvider";
+import axiosSecure from "../api/axiosSecure";
 
 const Blogs = () => {
-  const {user} = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
   const [blogs, setBlogs] = useState([]);
   const categories = [
     "All",
@@ -19,7 +19,7 @@ const Blogs = () => {
   ];
 
   const handleCategories = (category) => {
-    axios.get("http://localhost:5000/blogs").then((res) => {
+    axiosSecure.get("/blogs").then((res) => {
       const filteredBlogs =
         category === "All"
           ? res.data.data || res.data
@@ -31,14 +31,15 @@ const Blogs = () => {
   };
 
   useEffect(() => {
-    axios
-      .get("http://localhost:5000/blogs")
-      .then((response) => {
+    axiosSecure.get("/blogs").then((response) => {
+      if (Array.isArray(response.data)) {
         setBlogs(response.data);
-      })
-      .catch((error) => {
-        console.error("Error fetching blogs:", error);
-      });
+      } else if (Array.isArray(response.data.data)) {
+        setBlogs(response.data.data);
+      } else {
+        setBlogs([]);
+      }
+    });
   }, []);
 
   return (
@@ -55,8 +56,12 @@ const Blogs = () => {
             </button>
           ))}
         </div>
-        <div className={` ml-4 flex px-2 items-center justify-center text-blue-500 border rounded-full cursor-pointer ${user ? '' : 'hidden'}`}>
-          <Link to="/createBlog" className="text-lg font-semibold">+New Blog</Link>
+        <div
+          className={` ml-4 flex px-2 items-center justify-center text-blue-500 border rounded-full cursor-pointer ${user ? "" : "hidden"}`}
+        >
+          <Link to="/createBlog" className="text-lg font-semibold">
+            +New Blog
+          </Link>
         </div>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-4 sm:gap-6 px-4 sm:px-6 lg:px-0">

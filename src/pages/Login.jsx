@@ -22,7 +22,14 @@ export default function Login() {
         email: result.user.email,
         uid: result.user.uid,
       };
-      await axios.post("http://localhost:5000/users", userData);
+      await axios.post("/users", userData);
+
+      //  request JWT token from backend
+      const tokenRes = await axios.post("/jwt", {
+        email: result.user.email,
+      });
+      // store token in localStorage
+      localStorage.setItem("access-token", tokenRes.data.token);
       Swal.fire({
         toast: true,
         position: "top-end",
@@ -52,7 +59,14 @@ export default function Login() {
         email: res.user.email,
         uid: res.user.uid,
       };
-      await axios.post("http://localhost:5000/users", userData);
+      await axios.post("/users", userData);
+
+      // get JWT
+      const tokenRes = await axios.post("/jwt", {
+        email: res.user.email,
+      });
+
+      localStorage.setItem("access-token", tokenRes.data.token);
       Swal.fire({
         toast: true,
         position: "top-end",

@@ -5,7 +5,7 @@ import { IoIosHeart } from "react-icons/io";
 import { PiShareFatLight } from "react-icons/pi";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../context/AuthProvider";
-import axios from "axios";
+import axiosSecure from "../api/axiosSecure";
 import Swal from "sweetalert2";
 
 const BlogCard = ({ blog }) => {
@@ -14,8 +14,8 @@ const BlogCard = ({ blog }) => {
 
   useEffect(() => {
     if (user?.email) {
-      axios
-        .get(`http://localhost:5000/userData/${user.email}`)
+      axiosSecure
+        .get(`/userData/${user.email}`)
         .then((res) => {
           setUserData(res.data);
         })
@@ -34,7 +34,7 @@ const BlogCard = ({ blog }) => {
     }
 
     try {
-      await axios.post("http://localhost:5000/savedBlogs", {
+      await axiosSecure.post("/savedBlogs", {
         userEmail: user.email,
         blogId: blog._id,
       });
@@ -71,7 +71,7 @@ const BlogCard = ({ blog }) => {
         <div className="">
           <div className="relative">
             <img
-              src={`http://localhost:5000/uploads/${blog.imageOne}`}
+              src={`/uploads/${blog.imageOne}`}
               alt={blog.title}
               className="w-full h-64 sm:h-80 md:h-96 lg:h-[500px] object-cover rounded-lg shadow-lg"
             />
@@ -89,7 +89,7 @@ const BlogCard = ({ blog }) => {
                 className="w-10 h-10 rounded-full"
               /> */}
               <img
-                src={`http://localhost:5000/uploads/${blog.authorImage}`}
+                src={`/uploads/${blog.authorImage}`}
                 alt={blog.author}
                 className="w-10 h-10 rounded-full"
               />

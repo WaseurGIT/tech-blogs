@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import { AuthContext } from "../context/AuthProvider";
-import axios from "axios";
+import axiosSecure from "../api/axiosSecure";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 
@@ -37,8 +37,8 @@ const UserDataUpdateForm = () => {
     }
 
     try {
-      await axios.put(
-        `http://localhost:5000/userData/${user.email}`,
+      await axiosSecure.put(
+        `/userData/${user.email}`,
         formData,
         {
           headers: {

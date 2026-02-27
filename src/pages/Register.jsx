@@ -45,7 +45,7 @@ export default function Register() {
         email: result.user.email,
         uid: result.user.uid,
       };
-      await axios.post("http://localhost:5000/users", userData);
+      await axios.post("/users", userData);
       Swal.fire({
         toast: true,
         position: "top-end",
@@ -74,7 +74,7 @@ export default function Register() {
         email: res.user.email,
         uid: res.user.uid,
       };
-      await axios.post("http://localhost:5000/users", userData);
+      await axios.post("/users", userData);
       Swal.fire({
         toast: true,
         position: "top-end",

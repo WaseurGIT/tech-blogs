@@ -2,7 +2,7 @@ import React, { useState, useContext, useEffect } from "react";
 import BlogCard from "../components/BlogCard";
 import { AuthContext } from "../context/AuthProvider";
 import { Link } from "react-router-dom";
-import axios from "axios";
+import axiosSecure from "../api/axiosSecure";
 
 const UserProfile = () => {
   const { user } = useContext(AuthContext);
@@ -20,8 +20,8 @@ const UserProfile = () => {
   useEffect(() => {
     if (!user?.email) return;
 
-    axios
-      .get(`http://localhost:5000/userData/${user.email}`)
+    axiosSecure
+      .get(`/userData/${user.email}`)
       .then((res) => {
         if (res.data) {
           setUserData(res.data);
@@ -39,8 +39,8 @@ const UserProfile = () => {
   useEffect(() => {
     if (!user?.email) return;
 
-    axios
-      .get(`http://localhost:5000/blogs/user/${user.email}`)
+    axiosSecure
+      .get(`/blogs/user/${user.email}`)
       .then((res) => {
         setUserPosts(res.data);
       })
@@ -53,7 +53,7 @@ const UserProfile = () => {
     <div className="min-h-screen bg-gray-50">
       <div className="relative w-full h-64 md:h-80 bg-gray-300 overflow-hidden">
         <img
-          src={`http://localhost:5000/uploads/${userData?.coverImage}`}
+          src={`/uploads/${userData?.coverImage}`}
           alt="Cover"
           className="w-full h-full object-cover"
         />
@@ -68,7 +68,7 @@ const UserProfile = () => {
             <div className="flex justify-center md:justify-start">
               <img
                 // src={userData.profileImage}
-                src={`http://localhost:5000/uploads/${userData?.profilePicture}`}
+                src={`/uploads/${userData?.profilePicture}`}
                 alt={userData?.name}
                 className="w-40 h-40 rounded-full border-4 border-white shadow-lg object-cover"
               />

@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../context/AuthProvider";
-import axios from "axios";
+import axiosSecure from "../api/axiosSecure";
 import { Link } from "react-router-dom";
 
 const SavedBlogs = () => {
@@ -15,8 +15,8 @@ const SavedBlogs = () => {
       return;
     }
 
-    axios
-      .get(`http://localhost:5000/savedBlogs/${user.email}`)
+    axiosSecure
+      .get(`/savedBlogs/${user.email}`)
       .then((response) => {
         setSavedBlogs(response.data.data || response.data || []);
         setLoading(false);

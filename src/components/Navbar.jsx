@@ -3,7 +3,7 @@ import { IoPersonCircle } from "react-icons/io5";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthProvider";
 import Swal from "sweetalert2";
-import axios from "axios";
+import axiosSecure from "../api/axiosSecure";
 
 const Navbar = () => {
   const { user, logOut } = useContext(AuthContext);
@@ -12,8 +12,8 @@ const Navbar = () => {
 
   useEffect(() => {
     if (user?.email) {
-      axios
-        .get(`http://localhost:5000/userData/${user.email}`)
+      axiosSecure
+        .get(`/userData/${user.email}`)
         .then((res) => {
           setUserData(res.data);
         })
@@ -96,7 +96,7 @@ const Navbar = () => {
                   <img
                     src={
                       userData?.profilePicture
-                        ? `http://localhost:5000/uploads/${userData.profilePicture}`
+                        ? `/uploads/${userData.profilePicture}`
                         : null
                     }
                     alt={user.displayName}

@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import { AuthContext } from "../context/AuthProvider";
-import axios from "axios";
+import axiosSecure from "../api/axiosSecure";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 
@@ -35,7 +35,7 @@ const CreateBlog = () => {
     formData.append("imageTwo", form.imageTwo.files[0]);
 
     try {
-      const res = await axios.post("http://localhost:5000/blogs", formData, {
+      const res = await axiosSecure.post("/blogs", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },

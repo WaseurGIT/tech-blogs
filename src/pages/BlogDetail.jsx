@@ -1,11 +1,11 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import axios from "axios";
 import { IoArrowBack } from "react-icons/io5";
 import { FaRegComment, FaCalendarAlt } from "react-icons/fa";
 import { IoIosHeart } from "react-icons/io";
 import { AuthContext } from "../context/AuthProvider";
 import Swal from "sweetalert2";
+import axiosSecure from "../api/axiosSecure";
 
 const BlogDetail = () => {
   const { user } = useContext(AuthContext);
@@ -31,8 +31,8 @@ const BlogDetail = () => {
         author: user.displayName,
         text: commentText,
       };
-      const response = await axios.post(
-        `http://localhost:5000/blogs/${id}/comments`,
+      const response = await axiosSecure.post(
+        `/blogs/${id}/comments`,
         newComment,
       );
       setBlog((prevBlog) => ({
@@ -53,7 +53,7 @@ const BlogDetail = () => {
     }
 
     try {
-      await axios.post(`http://localhost:5000/blogs/${id}/like`, {
+      await axiosSecure.post(`/blogs/${id}/like`, {
         email: user.email,
       });
 
@@ -68,8 +68,8 @@ const BlogDetail = () => {
   };
 
   useEffect(() => {
-    axios
-      .get(`http://localhost:5000/blogs/${id}`)
+    axiosSecure
+      .get(`/blogs/${id}`)
       .then((response) => {
         const foundBlog = response.data.data || response.data;
         if (foundBlog) {
@@ -105,7 +105,7 @@ const BlogDetail = () => {
 
     if (result.isConfirmed) {
       try {
-        await axios.delete(`http://localhost:5000/blogs/${id}`, {
+        await axiosSecure.delete(`/blogs/${id}`, {
           data: { email: user.email },
         });
         Swal.fire({
@@ -225,7 +225,7 @@ const BlogDetail = () => {
       {/* Main Image */}
       <div className="mb-8 sm:mb-12 lg:mb-16">
         <img
-          src={`http://localhost:5000/uploads/${blog.imageOne}`}
+          src={`/uploads/${blog.imageOne}`}
           alt={blog.title}
           className="w-full h-64 sm:h-80 md:h-96 lg:h-[500px] object-cover rounded-lg shadow-lg"
         />
@@ -241,7 +241,7 @@ const BlogDetail = () => {
       </div>
       <div>
         <img
-          src={`http://localhost:5000/uploads/${blog.imageTwo}`}
+          src={`/uploads/${blog.imageTwo}`}
           alt={`${blog.title} - Image 1`}
           className="w-full h-64 sm:h-80 object-cover rounded-lg shadow-lg"
         />
