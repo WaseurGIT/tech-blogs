@@ -8,11 +8,25 @@ import { AuthContext } from "../context/AuthProvider";
 
 const BlogDetail = () => {
   const { user } = useContext(AuthContext);
+  const [userData, setUserData] = useState(null);
   const { id } = useParams();
   const [blog, setBlog] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const alreadyLiked = blog?.likedUsers?.includes(user?.email);
+
+  useEffect(() => {
+    if (user?.email) {
+      axios
+        .get(`http://localhost:5000/userData/${user.email}`)
+        .then((res) => {
+          setUserData(res.data);
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+    }
+  }, [user]);
 
   const handleCommentSubmit = async (e) => {
     e.preventDefault();
@@ -56,7 +70,6 @@ const BlogDetail = () => {
         email: user.email,
       });
 
-      // ✅ Update likedUsers locally
       setBlog((prev) => ({
         ...prev,
         likedUsers: [...(prev.likedUsers || []), user.email],
@@ -71,7 +84,7 @@ const BlogDetail = () => {
     axios
       .get(`http://localhost:5000/blogs/${id}`)
       .then((response) => {
-        const foundBlog = response.data.data || response.data; // Handle both cases where data is nested or not
+        const foundBlog = response.data.data || response.data;
         if (foundBlog) {
           setBlog(foundBlog);
         } else {
@@ -121,10 +134,18 @@ const BlogDetail = () => {
           </span>
           <div className="flex items-center gap-2 text-gray-600">
             <FaCalendarAlt className="w-4 h-4" />
-            <span className="text-sm">{blog.published_date}</span>
+            <span className="text-sm">
+              {blog.publishedDate
+                ? new Date(blog.publishedDate).toLocaleDateString("en-BD", {
+                    year: "numeric",
+                    month: "long",
+                    day: "numeric",
+                  })
+                : ""}
+            </span>
           </div>
           <span className="bg-gray-200 text-gray-700 px-4 py-2 rounded-lg text-sm font-medium">
-            {blog.read_time}
+            {blog.readTime} min
           </span>
         </div>
 
@@ -136,15 +157,18 @@ const BlogDetail = () => {
         {/* Author Info */}
         <div className="flex items-center gap-4 mb-8 sm:mb-12">
           <img
-            src={blog.author_profile}
-            alt={blog.author}
-            className="w-12 h-12 sm:w-16 sm:h-16 rounded-full object-cover"
+            src={
+              userData?.profilePicture
+                ? `http://localhost:5000/uploads/${userData.profilePicture}`
+                : null
+            }
+            // alt={user.displayName}
+            className="w-10 h-10 sm:w-10 sm:h-10 rounded-full cursor-pointer hover:ring-2 hover:ring-orange-500 transition-all"
           />
           <div>
-            <p className="font-bold text-base sm:text-lg text-gray-900">
+            <p className="font-bold text-base sm:text-lg text-blue-500">
               {blog.author}
             </p>
-            <p className="text-sm text-gray-600">Tech Blogger & Writer</p>
           </div>
         </div>
 
@@ -175,7 +199,7 @@ const BlogDetail = () => {
       {/* Main Image */}
       <div className="mb-8 sm:mb-12 lg:mb-16">
         <img
-          src={blog.image_one}
+          src={`http://localhost:5000/uploads/${blog.imageOne}`}
           alt={blog.title}
           className="w-full h-64 sm:h-80 md:h-96 lg:h-[500px] object-cover rounded-lg shadow-lg"
         />
@@ -191,7 +215,7 @@ const BlogDetail = () => {
       </div>
       <div>
         <img
-          src={blog.image_two}
+          src={`http://localhost:5000/uploads/${blog.imageTwo}`}
           alt={`${blog.title} - Image 1`}
           className="w-full h-64 sm:h-80 object-cover rounded-lg shadow-lg"
         />

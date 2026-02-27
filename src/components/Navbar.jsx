@@ -1,12 +1,27 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { IoPersonCircle } from "react-icons/io5";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthProvider";
 import Swal from "sweetalert2";
+import axios from "axios";
 
 const Navbar = () => {
   const { user, logOut } = useContext(AuthContext);
+  const [userData, setUserData] = useState(null);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (user?.email) {
+      axios
+        .get(`http://localhost:5000/userData/${user.email}`)
+        .then((res) => {
+          setUserData(res.data);
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+    }
+  }, [user]);
 
   const handleLogout = async () => {
     try {
@@ -75,11 +90,15 @@ const Navbar = () => {
           {user ? (
             <>
               <div className="flex items-center gap-3">
-                {user.photoURL ? (
+                {userData?.profilePicture ? (
                   <img
-                    src={user.photoURL}
+                    src={
+                      userData?.profilePicture
+                        ? `http://localhost:5000/uploads/${userData.profilePicture}`
+                        : null
+                    }
                     alt={user.displayName}
-                    className="w-8 h-8 sm:w-10 sm:h-10 rounded-full cursor-pointer hover:ring-2 hover:ring-orange-500 transition-all"
+                    className="w-10 h-10 sm:w-10 sm:h-10 rounded-full cursor-pointer hover:ring-2 hover:ring-orange-500 transition-all"
                   />
                 ) : (
                   <h1 className="text-white font-medium bg-purple-500 text-lg w-8 h-8 sm:w-10 sm:h-10 rounded-full flex items-center justify-center cursor-pointer hover:ring-2 hover:ring-purple-500 transition-all">
