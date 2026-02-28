@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { CiBookmark } from "react-icons/ci";
-import { FaRegComment } from "react-icons/fa";
+import { FaFacebook, FaRegComment, FaWhatsapp } from "react-icons/fa";
 import { IoIosHeart } from "react-icons/io";
 import { PiShareFatLight } from "react-icons/pi";
 import { Link } from "react-router-dom";
@@ -64,6 +64,22 @@ const BlogCard = ({ blog }) => {
   if (!blog) {
     return <div>No blog data available</div>;
   }
+
+  const handleWhatsAppShare = (e) => {
+    e.preventDefault();
+    const blogUrl = `${window.location.origin}/blogs/${blog._id}`;
+    const message = `Check this blog:\n\n${blog.title}\n\nRead here: ${blogUrl}`;
+
+    const whatsappUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(message)}`;
+    window.open(whatsappUrl, "_blank");
+  };
+
+  const handleFacebookShare = (e) => {
+    e.preventDefault();
+    const blogUrl = `${window.location.origin}/blogs/${blog._id}`;
+    const facebookUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(blogUrl)}`;
+    window.open(facebookUrl, "_blank");
+  };
 
   return (
     <Link to={`/blogs/${blog._id}`}>
@@ -129,12 +145,26 @@ const BlogCard = ({ blog }) => {
               }}
               className="p-2 rounded-full bg-gray-100 hover:bg-orange-100 text-gray-600 hover:text-orange-500 transition-all duration-300"
             >
-              <CiBookmark className="w-5 h-5" />
+              <CiBookmark className="w-5 h-5 cursor-pointer" />
             </button>
 
-            <button className="p-2 rounded-full bg-gray-100 hover:bg-green-100 text-gray-600 hover:text-green-500 transition-all duration-300">
-              <PiShareFatLight className="w-5 h-5" />
-            </button>
+            <div className="flex items-center gap-3">
+              {/* WhatsApp */}
+              <button
+                onClick={handleWhatsAppShare}
+                className="p-2 rounded-full bg-gray-100 hover:bg-green-100 text-gray-600 hover:text-green-500 transition-all duration-300"
+              >
+                <FaWhatsapp className="text-green-500 text-xl cursor-pointer" />
+              </button>
+
+              {/* Facebook */}
+              <button
+                onClick={handleFacebookShare}
+                className="p-2 rounded-full bg-gray-100 hover:bg-blue-100 text-gray-600 hover:text-blue-500 transition-all duration-300"
+              >
+                <FaFacebook className="text-blue-500 text-xl cursor-pointer" />
+              </button>
+            </div>
           </div>
         </div>
       </div>
