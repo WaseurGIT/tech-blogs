@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const axiosSecure = axios.create({
-  baseURL: "https://tech-blog-server-0qnc.onrender.com",
+  baseURL: import.meta.env.VITE_API_URL,
 });
 
 axiosSecure.interceptors.request.use((config) => {
