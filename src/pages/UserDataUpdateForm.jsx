@@ -60,25 +60,25 @@ const UserDataUpdateForm = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-2xl mx-auto bg-white rounded-lg shadow-md p-8">
-        <h1 className="text-3xl font-bold text-gray-800 mb-8">
+    <div className="min-h-screen bg-gray-50 py-8 sm:py-12 lg:py-16 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-3xl mx-auto bg-white rounded-lg shadow-md p-6 sm:p-8 lg:p-10">
+        <h1 className="text-2xl sm:text-3xl font-bold text-gray-800 mb-6 sm:mb-8">
           Update Profile
         </h1>
 
-        <form className="space-y-8" onSubmit={handleSubmit}>
+        <form className="space-y-6 sm:space-y-8" onSubmit={handleSubmit}>
           {/* Cover Image Upload */}
           <div>
             <label className="block text-sm font-semibold text-gray-700 mb-3">
               Cover Image
             </label>
-            <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 bg-gray-50">
+            <div className="border-2 border-dashed border-gray-300 rounded-lg p-4 sm:p-6 bg-gray-50 hover:bg-gray-100 transition">
               <label
                 htmlFor="coverImage"
-                className="flex flex-col items-center justify-center cursor-pointer py-8"
+                className="flex flex-col items-center justify-center cursor-pointer py-6 sm:py-8"
               >
                 <svg
-                  className="w-12 h-12 text-gray-400 mb-2"
+                  className="w-10 h-10 sm:w-12 sm:h-12 text-gray-400 mb-2"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -90,7 +90,7 @@ const UserDataUpdateForm = () => {
                     d="M12 4v16m8-8H4"
                   />
                 </svg>
-                <p className="text-gray-600 font-medium">
+                <p className="text-gray-600 font-medium text-xs sm:text-sm text-center">
                   Click to upload cover image
                 </p>
               </label>
@@ -109,13 +109,13 @@ const UserDataUpdateForm = () => {
             <label className="block text-sm font-semibold text-gray-700 mb-3">
               Profile Picture
             </label>
-            <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 bg-gray-50">
+            <div className="border-2 border-dashed border-gray-300 rounded-lg p-4 sm:p-6 bg-gray-50 hover:bg-gray-100 transition">
               <label
                 htmlFor="profilePicture"
-                className="flex flex-col items-center justify-center cursor-pointer py-8"
+                className="flex flex-col items-center justify-center cursor-pointer py-6 sm:py-8"
               >
                 <svg
-                  className="w-12 h-12 text-gray-400 mb-2"
+                  className="w-10 h-10 sm:w-12 sm:h-12 text-gray-400 mb-2"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -127,7 +127,7 @@ const UserDataUpdateForm = () => {
                     d="M12 4v16m8-8H4"
                   />
                 </svg>
-                <p className="text-gray-600 font-medium">
+                <p className="text-gray-600 font-medium text-xs sm:text-sm text-center">
                   Click to upload profile picture
                 </p>
               </label>
@@ -141,40 +141,43 @@ const UserDataUpdateForm = () => {
             </div>
           </div>
 
-          {/* Name Input */}
-          <div>
-            <label
-              htmlFor="name"
-              className="block text-sm font-semibold text-gray-700 mb-2"
-            >
-              Full Name
-            </label>
-            <input
-              id="name"
-              type="text"
-              name="name"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              placeholder="Enter your full name"
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg text-sm font-normal transition-all focus:outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-100"
-            />
-          </div>
+          {/* Form Fields Grid */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            {/* Name Input */}
+            <div>
+              <label
+                htmlFor="name"
+                className="block text-sm font-semibold text-gray-700 mb-2"
+              >
+                Full Name
+              </label>
+              <input
+                id="name"
+                type="text"
+                name="name"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                placeholder="Enter your full name"
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg text-sm sm:text-base font-normal transition-all focus:outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-100"
+              />
+            </div>
 
-          {/* Profession Input */}
-          <div>
-            <label
-              htmlFor="profession"
-              className="block text-sm font-semibold text-gray-700 mb-2"
-            >
-              Profession
-            </label>
-            <input
-              id="profession"
-              type="text"
-              name="profession"
-              placeholder="e.g., Full Stack Developer"
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg text-sm font-normal transition-all focus:outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-100"
-            />
+            {/* Profession Input */}
+            <div>
+              <label
+                htmlFor="profession"
+                className="block text-sm font-semibold text-gray-700 mb-2"
+              >
+                Profession
+              </label>
+              <input
+                id="profession"
+                type="text"
+                name="profession"
+                placeholder="e.g., Full Stack Developer"
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg text-sm sm:text-base font-normal transition-all focus:outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-100"
+              />
+            </div>
           </div>
 
           {/* Institute Input */}
@@ -190,7 +193,7 @@ const UserDataUpdateForm = () => {
               type="text"
               name="institute"
               placeholder="e.g., Your Company or University"
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg text-sm font-normal transition-all focus:outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-100"
+              className="w-full px-4 py-3 border border-gray-300 rounded-lg text-sm sm:text-base font-normal transition-all focus:outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-100"
             />
           </div>
 
@@ -207,15 +210,15 @@ const UserDataUpdateForm = () => {
               name="bio"
               placeholder="Tell us about yourself..."
               rows="5"
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg text-sm font-normal transition-all focus:outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-100 resize-none"
+              className="w-full px-4 py-3 border border-gray-300 rounded-lg text-sm sm:text-base font-normal transition-all focus:outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-100 resize-none"
             />
           </div>
 
           {/* Submit Button */}
-          <div className="flex gap-4">
+          <div>
             <button
               type="submit"
-              className="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded-lg transition-all duration-200 flex items-center justify-center gap-2"
+              className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded-lg transition-all duration-200 text-base sm:text-lg"
             >
               Update Profile
             </button>

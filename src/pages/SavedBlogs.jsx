@@ -13,7 +13,6 @@ const SavedBlogs = () => {
 
   useEffect(() => {
     if (!user?.email) {
-      setLoading(false);
       return;
     }
 
@@ -100,42 +99,57 @@ const SavedBlogs = () => {
   }
 
   return (
-    <div className="mb-12 sm:mb-20 lg:mb-36 px-4 sm:px-6 lg:px-0">
-      <div className="mb-8 sm:mb-12">
-        <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900">
-          Saved Blogs
-        </h1>
-        <p className="text-gray-600 mt-2">
-          {savedBlogs.length} {savedBlogs.length === 1 ? "blog" : "blogs"} saved
-        </p>
-      </div>
-
-      <div className="space-y-3">
-        {savedBlogs.length === 0 ? (
-          <p className="text-center text-gray-500 text-lg py-8">
-            No saved blogs yet. Start saving blogs to see them here!
+    <div className="min-h-screen bg-gray-50 py-8 sm:py-12 lg:py-16 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-4xl mx-auto">
+        {/* Header */}
+        <div className="mb-8 sm:mb-12">
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900">
+            Saved Blogs
+          </h1>
+          <p className="text-gray-600 mt-2 text-sm sm:text-base">
+            {savedBlogs.length} {savedBlogs.length === 1 ? "blog" : "blogs"} saved
           </p>
-        ) : (
-          savedBlogs.map((blog) => (
-            <Link key={blog._id || blog.id} to={`/blogs/${blog._id}`}>
-              <div className="p-4 border border-gray-200 rounded-lg hover:bg-gray-50 hover:shadow-md transition cursor-pointer flex items-center justify-between group">
-                <div>
-                  <h2 className="text-lg sm:text-xl font-semibold text-blue-500 hover:text-blue-600">
-                    {blog.title}
-                  </h2>
-                  <h1 className="text-sm text-gray-500 mt-1">{blog.author}</h1>
+        </div>
+
+        {/* Blogs List */}
+        <div className="space-y-3 sm:space-y-4">
+          {savedBlogs.length === 0 ? (
+            <div className="text-center py-12">
+              <p className="text-gray-500 text-base sm:text-lg mb-4">
+                No saved blogs yet. Start saving blogs to see them here!
+              </p>
+              <Link
+                to="/blogs"
+                className="inline-block text-blue-500 hover:text-blue-600 font-semibold text-sm sm:text-base"
+              >
+                Browse blogs
+              </Link>
+            </div>
+          ) : (
+            savedBlogs.map((blog) => (
+              <Link key={blog._id || blog.id} to={`/blogs/${blog._id}`}>
+                <div className="p-4 sm:p-6 border border-gray-200 rounded-lg hover:bg-gray-50 hover:shadow-md transition cursor-pointer flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 group">
+                  <div className="flex-1 min-w-0">
+                    <h2 className="text-base sm:text-lg font-semibold text-blue-500 hover:text-blue-600 truncate">
+                      {blog.title}
+                    </h2>
+                    <p className="text-xs sm:text-sm text-gray-500 mt-1">
+                      By {blog.author}
+                    </p>
+                  </div>
+                  <button
+                    onClick={(e) => handleDeleteBlog(blog._id, e)}
+                    className="w-full sm:w-auto p-2 text-red-500 hover:text-red-700 hover:bg-red-50 rounded-lg transition font-semibold text-sm"
+                    title="Delete saved blog"
+                  >
+                    <MdDelete className="w-5 h-5 inline mr-2" />
+                    Remove
+                  </button>
                 </div>
-                <button
-                  onClick={(e) => handleDeleteBlog(blog._id, e)}
-                  className="ml-4 p-2 text-red-500 hover:text-red-700 hover:bg-red-50 rounded-lg transition opacity-0 group-hover:opacity-100"
-                  title="Delete saved blog"
-                >
-                  <MdDelete size={20} />
-                </button>
-              </div>
-            </Link>
-          ))
-        )}
+              </Link>
+            ))
+          )}
+        </div>
       </div>
     </div>
   );

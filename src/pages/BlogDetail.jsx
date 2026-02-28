@@ -142,186 +142,180 @@ const BlogDetail = () => {
   }
 
   return (
-    <div className="w-full py-8 sm:py-12 lg:py-16">
-      <button
-        onClick={() => window.history.back()}
-        className="cursor-pointer flex items-center gap-2 mb-6 sm:mb-8 text-orange-500 hover:text-orange-600 font-semibold transition"
-      >
-        <IoArrowBack className="w-5 h-5" />
-        Back to Blogs
-      </button>
+    <div className="w-full py-8 sm:py-12 lg:py-16 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-4xl mx-auto">
+        <button
+          onClick={() => window.history.back()}
+          className="cursor-pointer flex items-center gap-2 mb-6 sm:mb-8 text-orange-500 hover:text-orange-600 font-semibold transition"
+        >
+          <IoArrowBack className="w-5 h-5" />
+          Back to Blogs
+        </button>
 
-      {/* Header Section */}
-      <div className="mb-8 sm:mb-12 lg:mb-16">
-        {/* Category and Date */}
-        <div className="flex flex-col sm:flex-row gap-3 sm:gap-6 items-start sm:items-center mb-4">
-          <span className="bg-orange-100 text-orange-600 px-4 py-2 rounded-lg text-sm font-semibold">
-            {blog.category}
-          </span>
-          <div className="flex items-center gap-2 text-gray-600">
-            <FaCalendarAlt className="w-4 h-4" />
-            <span className="text-sm">
-              {blog.publishedDate
-                ? new Date(blog.publishedDate).toLocaleDateString("en-BD", {
-                    year: "numeric",
-                    month: "long",
-                    day: "numeric",
-                  })
-                : ""}
+        {/* Header Section */}
+        <div className="mb-8 sm:mb-12 lg:mb-16">
+          {/* Category and Date */}
+          <div className="flex flex-col gap-3 sm:flex-row sm:gap-6 sm:items-center mb-4 flex-wrap">
+            <span className="bg-orange-100 text-orange-600 px-4 py-2 rounded-lg text-sm font-semibold w-fit">
+              {blog.category}
+            </span>
+            <div className="flex items-center gap-2 text-gray-600">
+              <FaCalendarAlt className="w-4 h-4" />
+              <span className="text-sm">
+                {blog.publishedDate
+                  ? new Date(blog.publishedDate).toLocaleDateString("en-BD", {
+                      year: "numeric",
+                      month: "long",
+                      day: "numeric",
+                    })
+                  : ""}
+              </span>
+            </div>
+            <span className="bg-gray-200 text-gray-700 px-4 py-2 rounded-lg text-sm font-medium w-fit">
+              {blog.readTime} min
             </span>
           </div>
-          <span className="bg-gray-200 text-gray-700 px-4 py-2 rounded-lg text-sm font-medium">
-            {blog.readTime} min
-          </span>
-        </div>
 
-        {/* Title */}
-        <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-4 sm:mb-6 leading-tight">
-          {blog.title}
-        </h1>
+          {/* Title */}
+          <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-4 sm:mb-6 leading-tight">
+            {blog.title}
+          </h1>
 
-        {/* Author Info */}
-        <div className="flex items-center gap-4 mb-8 sm:mb-12">
-          <img
-            src={
-              blog.authorImage
-                ? blog.authorImage
-                : "https://via.placeholder.com/150"
-            }
-            alt={blog.author}
-            className="w-10 h-10 rounded-full"
-          />
-          <div>
-            <p className="font-bold text-base sm:text-lg text-blue-500">
-              {blog.author}
-            </p>
-          </div>
-        </div>
-
-        {/* Stats */}
-        <div className="flex flex-wrap gap-4 sm:gap-8">
-          <div className="flex items-center gap-2">
-            <IoIosHeart
-              onClick={!alreadyLiked ? handleLike : undefined}
-              className={`w-5 h-5 transition ${
-                alreadyLiked
-                  ? "text-red-500 cursor-not-allowed"
-                  : "text-gray-600 cursor-pointer hover:text-red-600"
-              }`}
+          {/* Author Info */}
+          <div className="flex items-center gap-4 mb-8 sm:mb-12">
+            <img
+              src={`/uploads/${blog.authorImage}`}
+              alt={blog.author}
+              className="w-10 h-10 sm:w-12 sm:h-12 rounded-full object-cover flex-shrink-0"
             />
-            <span className={`text-gray-700 font-semibold `}>
-              {blog.likes || 0} Likes
-            </span>
+            <div>
+              <p className="font-bold text-base sm:text-lg text-blue-500">
+                {blog.author}
+              </p>
+            </div>
           </div>
-          <div className="flex items-center gap-2">
-            <FaRegComment className="w-5 h-5 text-blue-500" />
-            <span className="text-gray-700 font-semibold">
-              {blog.comments?.length || 0} Comments
-            </span>
+
+          {/* Stats */}
+          <div className="flex flex-wrap gap-4 sm:gap-8 text-sm sm:text-base">
+            <div className="flex items-center gap-2">
+              <IoIosHeart
+                onClick={!alreadyLiked ? handleLike : undefined}
+                className={`w-5 h-5 transition ${
+                  alreadyLiked
+                    ? "text-red-500 cursor-not-allowed"
+                    : "text-gray-600 cursor-pointer hover:text-red-600"
+                }`}
+              />
+              <span className={`text-gray-700 font-semibold`}>
+                {blog.likes || 0} Likes
+              </span>
+            </div>
+            <div className="flex items-center gap-2">
+              <FaRegComment className="w-5 h-5 text-blue-500" />
+              <span className="text-gray-700 font-semibold">
+                {blog.comments?.length || 0} Comments
+              </span>
+            </div>
           </div>
         </div>
-      </div>
 
-      {/* Main Image */}
-      <div className="mb-8 sm:mb-12 lg:mb-16">
-        <img
-          src={`/uploads/${blog.imageOne}`}
-          alt={blog.title}
-          className="w-full h-64 sm:h-80 md:h-96 lg:h-[500px] object-cover rounded-lg shadow-lg"
-        />
-      </div>
+        {/* Main Image */}
+        <div className="mb-8 sm:mb-12 lg:mb-16">
+          <img
+            src={`/uploads/${blog.imageOne}`}
+            alt={blog.title}
+            className="w-full h-auto sm:h-96 md:h-full max-h-96 object-cover rounded-lg shadow-lg"
+          />
+        </div>
 
-      {/* Content with Image Section */}
-      <div className="mb-12 sm:mb-16 lg:mb-20">
-        <div>
-          <p className="text-sm sm:text-base text-gray-700 leading-relaxed mb-4">
+        {/* Content with Image Section */}
+        <div className="mb-8 sm:mb-12 lg:mb-16">
+          <p className="text-sm sm:text-base text-gray-700 leading-relaxed mb-6 sm:mb-8">
             {blog.content.substring(0, blog.content.length / 2)}
           </p>
         </div>
-      </div>
-      <div>
-        <img
-          src={`/uploads/${blog.imageTwo}`}
-          alt={`${blog.title} - Image 1`}
-          className="w-full h-64 sm:h-80 object-cover rounded-lg shadow-lg"
-        />
-      </div>
 
-      <div className="mt-5 mb-12 sm:mb-16 lg:mb-20">
-        <div className="order-1 lg:order-2">
-          <p className="text-sm sm:text-base text-gray-700 leading-relaxed mb-4">
+        <div className="mb-8 sm:mb-12 lg:mb-16">
+          <img
+            src={`/uploads/${blog.imageTwo}`}
+            alt={`${blog.title} - Image 1`}
+            className="w-full h-auto max-h-96 object-cover rounded-lg shadow-lg mb-6 sm:mb-8"
+          />
+          <p className="text-sm sm:text-base text-gray-700 leading-relaxed">
             {blog.content.substring(blog.content.length / 2)}
           </p>
         </div>
-      </div>
 
-      {/* Comments Section */}
-      <div>
-        <h2 className="text-2xl sm:text-3xl font-bold mb-8 text-gray-900">
-          Comments ({blog.comments?.length || 0})
-        </h2>
+        {/* Comments Section */}
+        <div className="pt-8 sm:pt-12 border-t border-gray-200">
+          <h2 className="text-2xl sm:text-3xl font-bold mb-8 text-gray-900">
+            Comments ({blog.comments?.length || 0})
+          </h2>
 
-        <div className="space-y-2">
-          {blog.comments
-            ?.filter((comment) => comment !== null)
-            .map((comment, index) => (
-              <div
-                key={comment.id || index}
-                className="bg-gray-50 rounded-lg p-2 border border-gray-200 hover:shadow-md transition"
-              >
-                <div className="flex items-start gap-4 mb-3">
-                  {/* Placeholder for comment profile image */}
-                  <div className="flex-shrink-0">
-                    <div className="w-8 h-8 sm:w-8 sm:h-8 bg-gradient-to-br from-orange-300 to-orange-400 rounded-full flex items-center justify-center text-white font-bold text-sm">
-                      {comment.author?.charAt(0)?.toUpperCase() || "U"}
+          <div className="space-y-3 mb-8 sm:mb-12">
+            {blog.comments
+              ?.filter((comment) => comment !== null)
+              .map((comment, index) => (
+                <div
+                  key={comment.id || index}
+                  className="bg-gray-50 rounded-lg p-3 sm:p-4 border border-gray-200 hover:shadow-md transition"
+                >
+                  <div className="flex items-start gap-3 sm:gap-4">
+                    <div className="flex-shrink-0">
+                      <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-br from-orange-300 to-orange-400 rounded-full flex items-center justify-center text-white font-bold text-xs sm:text-sm">
+                        {comment.author?.charAt(0)?.toUpperCase() || "U"}
+                      </div>
+                    </div>
+
+                    <div className="flex-grow min-w-0">
+                      <h3 className="font-semibold text-sm sm:text-base text-gray-900">
+                        {comment.author}
+                      </h3>
+                      <p className="text-xs sm:text-sm text-gray-600 break-words">
+                        {comment.text}
+                      </p>
                     </div>
                   </div>
-
-                  {/* Comment Content */}
-                  <div className="flex-grow">
-                    <h3 className="font-semibold text-base sm:text-sm text-gray-900">
-                      {comment.author}
-                    </h3>
-                    <p className="text-sm">{comment.text}</p>
-                  </div>
                 </div>
+              ))}
+          </div>
+
+          {/* Add Comment Section */}
+          <div className="pt-6 sm:pt-8 border-t border-gray-200">
+            <h3 className="text-lg sm:text-xl font-bold mb-4 text-gray-900">
+              Leave a Comment
+            </h3>
+            <form onSubmit={handleCommentSubmit} className="space-y-4">
+              <div>
+                <textarea
+                  placeholder="Your Comment"
+                  name="comment"
+                  rows="4"
+                  className="w-full px-3 sm:px-4 py-2 sm:py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 text-sm sm:text-base resize-none"
+                ></textarea>
               </div>
-            ))}
+              <button
+                type="submit"
+                className={`w-full sm:w-auto bg-blue-500 hover:bg-blue-600 cursor-pointer text-white font-semibold py-2 sm:py-3 px-6 sm:px-8 rounded-lg transition text-sm sm:text-base ${user ? "" : "cursor-not-allowed opacity-50"}`}
+              >
+                Post Comment
+              </button>
+            </form>
+          </div>
         </div>
 
-        {/* Add Comment Section */}
-        <div className="mt-8 sm:mt-12 pt-8 sm:pt-12 border-t border-gray-200">
-          <h3 className="text-lg sm:text-xl font-bold mb-4 text-gray-900">
-            Leave a Comment
-          </h3>
-          <form onSubmit={handleCommentSubmit} className="space-y-4">
-            <div>
-              <textarea
-                placeholder="Your Comment"
-                name="comment"
-                rows="4"
-                className="w-full px-4 py-2 sm:py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 text-sm sm:text-base"
-              ></textarea>
-            </div>
+        {/* Delete Button - Admin Only */}
+        {role === "admin" && (
+          <div className="mt-8 sm:mt-12">
             <button
-              type="submit"
-              className={`bg-blue-500 hover:bg-blue-600 cursor-pointer text-white font-semibold py-2 sm:py-3 px-6 sm:px-8 rounded-lg transition text-sm sm:text-base ${user ? "" : "cursor-not-allowed"}`}
+              onClick={handleDelete}
+              className="w-full bg-red-500 text-white py-3 rounded-lg font-semibold hover:bg-red-600 transition cursor-pointer text-sm sm:text-base"
             >
-              Post Comment
+              Delete Blog
             </button>
-          </form>
-        </div>
+          </div>
+        )}
       </div>
-      {role === "admin" && (
-        <div>
-          <button
-            onClick={handleDelete}
-            className="bg-red-500 text-white py-3 w-full mt-3 rounded-xl font-semibold hover:bg-red-600 transition cursor-pointer"
-          >
-            Delete Blog
-          </button>
-        </div>
-      )}
     </div>
   );
 };

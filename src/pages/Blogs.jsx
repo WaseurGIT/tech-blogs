@@ -43,38 +43,45 @@ const Blogs = () => {
   }, []);
 
   return (
-    <div className="mb-12 sm:mb-20 lg:mb-36">
-      <div className="flex justify-center mb-6 sm:mb-8 lg:mb-12 px-4">
-        <div className="flex flex-wrap gap-2 sm:gap-3 lg:gap-4 justify-center">
+    <div className="mb-12 sm:mb-20 lg:mb-36 px-4 sm:px-6 lg:px-8">
+      {/* Category Filter */}
+      <div className="flex flex-col sm:flex-row justify-between items-center gap-4 mb-8 sm:mb-12 lg:mb-16 flex-wrap">
+        <div className="flex flex-wrap gap-2 sm:gap-3 lg:gap-4 justify-center sm:justify-start w-full">
           {categories.map((category) => (
             <button
               key={category}
               onClick={() => handleCategories(category)}
-              className="cursor-pointer px-3 sm:px-4 py-2 text-[var(--text-primary)] bg-[var(--bg-secondary)] hover:bg-gray-300 rounded-lg text-xs sm:text-sm font-medium transition duration-200"
+              className="cursor-pointer px-3 sm:px-4 py-2 text-[var(--text-primary)] bg-[var(--bg-secondary)] hover:bg-gray-300 rounded-lg text-xs sm:text-sm font-medium transition duration-200 whitespace-nowrap"
             >
               {category}
             </button>
           ))}
         </div>
-        <div
-          className={` ml-4 flex px-2 items-center justify-center text-blue-500 border rounded-full cursor-pointer ${user ? "" : "hidden"}`}
-        >
-          <Link to="/createBlog" className="text-lg font-semibold">
+        {user && (
+          <Link 
+            to="/createBlog" 
+            className="flex items-center justify-center gap-2 px-4 py-2 text-blue-500 border-2 border-blue-500 rounded-full cursor-pointer hover:bg-blue-50 transition whitespace-nowrap font-semibold text-sm"
+          >
             +New Blog
           </Link>
-        </div>
+        )}
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-4 sm:gap-6 px-4 sm:px-6 lg:px-0">
-        <div className="md:col-span-2 space-y-4 sm:space-y-6">
+
+      {/* Main Content Grid */}
+      <div className="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
+        {/* Blog Posts Section */}
+        <div className="col-span-1 sm:col-span-2 lg:col-span-2 space-y-4 sm:space-y-6">
           {blogs.length === 0 ? (
-            <p className="text-center text-gray-500">No blogs available</p>
+            <p className="text-center text-gray-500 py-12">No blogs available</p>
           ) : (
-            blogs.map((blog) => <BlogCard key={blog.id} blog={blog} />)
+            blogs.map((blog) => <BlogCard key={blog._id} blog={blog} />)
           )}
         </div>
-        <div className="col-span-1 hidden lg:block">
-          <img src={add1} alt="" className="w-full h-50 object-contain mb-4" />
-          <img src={add1} alt="" className="w-full h-50 object-contain my-2" />
+
+        {/* Sidebar Ads - Hidden on mobile, visible on lg screens */}
+        <div className="hidden lg:flex lg:col-span-1 flex-col gap-4">
+          <img src={add1} alt="Advertisement" className="w-full h-auto object-contain rounded-lg" />
+          <img src={add1} alt="Advertisement" className="w-full h-auto object-contain rounded-lg" />
         </div>
       </div>
     </div>

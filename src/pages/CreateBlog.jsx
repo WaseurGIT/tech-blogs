@@ -55,11 +55,13 @@ const CreateBlog = () => {
     }
   };
   return (
-    <div className="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-2xl mx-auto bg-white rounded-lg shadow-md p-8">
-        <h1 className="text-3xl font-bold text-gray-800 mb-8">Create Blog</h1>
+    <div className="min-h-screen bg-gray-50 py-8 sm:py-12 lg:py-16 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-3xl mx-auto bg-white rounded-lg shadow-md p-6 sm:p-8 lg:p-10">
+        <h1 className="text-2xl sm:text-3xl font-bold text-gray-800 mb-6 sm:mb-8">
+          Create Blog
+        </h1>
 
-        <form onSubmit={handleSubmit} className="space-y-8">
+        <form onSubmit={handleSubmit} className="space-y-6 sm:space-y-8">
           {/* Title Input */}
           <div>
             <label
@@ -73,7 +75,7 @@ const CreateBlog = () => {
               type="text"
               name="title"
               placeholder="Enter blog title"
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg text-sm font-normal transition-all focus:outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-100"
+              className="w-full px-4 py-3 border border-gray-300 rounded-lg text-sm sm:text-base font-normal transition-all focus:outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-100"
               required
             />
           </div>
@@ -89,7 +91,7 @@ const CreateBlog = () => {
             <select
               id="category"
               name="category"
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg text-sm font-normal transition-all focus:outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-100"
+              className="w-full px-4 py-3 border border-gray-300 rounded-lg text-sm sm:text-base font-normal transition-all focus:outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-100"
               required
             >
               <option value="">Select a category</option>
@@ -116,7 +118,7 @@ const CreateBlog = () => {
               name="readTime"
               placeholder="e.g., 5"
               min="1"
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg text-sm font-normal transition-all focus:outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-100"
+              className="w-full px-4 py-3 border border-gray-300 rounded-lg text-sm sm:text-base font-normal transition-all focus:outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-100"
               required
             />
           </div>
@@ -133,101 +135,104 @@ const CreateBlog = () => {
               id="content"
               name="content"
               placeholder="Write your blog content here..."
-              rows="10"
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg text-sm font-normal transition-all focus:outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-100 resize-none"
+              rows="8"
+              className="w-full px-4 py-3 border border-gray-300 rounded-lg text-sm sm:text-base font-normal transition-all focus:outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-100 resize-none"
               required
             />
           </div>
 
-          {/* Image One Upload */}
-          <div>
-            <label className="block text-sm font-semibold text-gray-700 mb-3">
-              Image One
-            </label>
-            <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 bg-gray-50">
-              <label
-                htmlFor="imageOne"
-                className="flex flex-col items-center justify-center cursor-pointer py-8"
-              >
-                <svg
-                  className="w-12 h-12 text-gray-400 mb-2"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
-                  />
-                </svg>
-                <p className="text-gray-600 font-medium">
-                  Click to upload image one
-                </p>
-                {formData.imageOne && (
-                  <p className="text-green-600 text-sm mt-2">
-                    {formData.imageOne.name}
-                  </p>
-                )}
+          {/* Image Uploads Grid */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            {/* Image One Upload */}
+            <div>
+              <label className="block text-sm font-semibold text-gray-700 mb-3">
+                Image One
               </label>
-              <input
-                id="imageOne"
-                type="file"
-                name="imageOne"
-                accept="image/*"
-                className="hidden"
-              />
+              <div className="border-2 border-dashed border-gray-300 rounded-lg p-4 sm:p-6 bg-gray-50 hover:bg-gray-100 transition">
+                <label
+                  htmlFor="imageOne"
+                  className="flex flex-col items-center justify-center cursor-pointer py-6 sm:py-8"
+                >
+                  <svg
+                    className="w-10 h-10 sm:w-12 sm:h-12 text-gray-400 mb-2"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
+                    />
+                  </svg>
+                  <p className="text-gray-600 font-medium text-xs sm:text-sm text-center">
+                    Click to upload image one
+                  </p>
+                  {formData.imageOne && (
+                    <p className="text-green-600 text-xs mt-2 text-center">
+                      {formData.imageOne.name}
+                    </p>
+                  )}
+                </label>
+                <input
+                  id="imageOne"
+                  type="file"
+                  name="imageOne"
+                  accept="image/*"
+                  className="hidden"
+                />
+              </div>
             </div>
-          </div>
 
-          {/* Image Two Upload */}
-          <div>
-            <label className="block text-sm font-semibold text-gray-700 mb-3">
-              Image Two
-            </label>
-            <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 bg-gray-50">
-              <label
-                htmlFor="imageTwo"
-                className="flex flex-col items-center justify-center cursor-pointer py-8"
-              >
-                <svg
-                  className="w-12 h-12 text-gray-400 mb-2"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
-                  />
-                </svg>
-                <p className="text-gray-600 font-medium">
-                  Click to upload image two
-                </p>
-                {formData.imageTwo && (
-                  <p className="text-green-600 text-sm mt-2">
-                    {formData.imageTwo.name}
-                  </p>
-                )}
+            {/* Image Two Upload */}
+            <div>
+              <label className="block text-sm font-semibold text-gray-700 mb-3">
+                Image Two
               </label>
-              <input
-                id="imageTwo"
-                type="file"
-                name="imageTwo"
-                accept="image/*"
-                className="hidden"
-              />
+              <div className="border-2 border-dashed border-gray-300 rounded-lg p-4 sm:p-6 bg-gray-50 hover:bg-gray-100 transition">
+                <label
+                  htmlFor="imageTwo"
+                  className="flex flex-col items-center justify-center cursor-pointer py-6 sm:py-8"
+                >
+                  <svg
+                    className="w-10 h-10 sm:w-12 sm:h-12 text-gray-400 mb-2"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
+                    />
+                  </svg>
+                  <p className="text-gray-600 font-medium text-xs sm:text-sm text-center">
+                    Click to upload image two
+                  </p>
+                  {formData.imageTwo && (
+                    <p className="text-green-600 text-xs mt-2 text-center">
+                      {formData.imageTwo.name}
+                    </p>
+                  )}
+                </label>
+                <input
+                  id="imageTwo"
+                  type="file"
+                  name="imageTwo"
+                  accept="image/*"
+                  className="hidden"
+                />
+              </div>
             </div>
           </div>
 
           {/* Submit Button */}
-          <div className="flex gap-4">
+          <div>
             <button
               type="submit"
-              className="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded-lg transition-all duration-200"
+              className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded-lg transition-all duration-200 text-base sm:text-lg"
             >
               Create Blog
             </button>

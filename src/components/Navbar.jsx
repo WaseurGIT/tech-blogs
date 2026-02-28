@@ -8,6 +8,7 @@ import axiosSecure from "../api/axiosSecure";
 const Navbar = () => {
   const { user, logOut } = useContext(AuthContext);
   const [userData, setUserData] = useState(null);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -35,13 +36,13 @@ const Navbar = () => {
         timer: 2000,
       });
       navigate("/");
+      setMobileMenuOpen(false);
     } catch (error) {
       Swal.fire({
         icon: "error",
         title: "Error",
         text: error.message,
       });
-      // console.error("Logout error:", error);
     }
   };
 
@@ -55,62 +56,73 @@ const Navbar = () => {
   ];
 
   return (
-    <nav className="fixed top-0 left-0 z-20 w-full bg-white border-b border-gray-200 shadow-sm">
+    <nav className="fixed top-0 left-0 z-50 w-full bg-white border-b border-gray-200 shadow-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 sm:py-4 flex items-center justify-between">
         {/* Logo */}
         <div className="flex-shrink-0">
           <Link
             to="/"
-            className="text-xl sm:text-2xl font-bold whitespace-nowrap"
+            className="text-lg sm:text-2xl font-bold whitespace-nowrap"
           >
             Blog<span className="text-orange-500">i</span>fy
           </Link>
         </div>
 
-        {/* Navigation Links */}
+        {/* Navigation Links - Desktop */}
         <div className="hidden md:flex items-center gap-6 lg:gap-8">
           {links.map((link) => (
-            <a
+            <Link
               key={link.path}
-              href={link.path}
+              to={link.path}
               className="text-gray-600 hover:text-gray-900 font-medium text-sm transition-colors duration-200"
             >
               {link.label}
-            </a>
+            </Link>
           ))}
         </div>
 
-        {/* Mobile Menu Indicator */}
-        <div className="flex md:hidden">
-          <button className="text-gray-600 hover:text-gray-900 text-lg">
-            &#9776;
+        {/* Mobile Menu Button */}
+        <div className="md:hidden">
+          <button
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            className="text-gray-600 hover:text-gray-900 text-2xl p-1"
+            aria-label="Toggle menu"
+          >
+            <svg
+              className={`w-6 h-6 transition-transform ${mobileMenuOpen ? 'rotate-90' : ''}`}
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              {mobileMenuOpen ? (
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              ) : (
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+              )}
+            </svg>
           </button>
         </div>
 
-        {/* User Profile */}
-        <div className="flex items-center gap-2 sm:gap-4">
+        {/* User Profile - Desktop */}
+        <div className="hidden md:flex items-center gap-2 sm:gap-4">
           {user ? (
             <>
               <div className="flex items-center gap-3">
                 {userData?.profilePicture ? (
                   <img
-                    src={
-                      userData?.profilePicture
-                        ? `/uploads/${userData.profilePicture}`
-                        : null
-                    }
+                    src={`/uploads/${userData.profilePicture}`}
                     alt={user.displayName}
-                    className="w-10 h-10 sm:w-10 sm:h-10 rounded-full cursor-pointer hover:ring-2 hover:ring-orange-500 transition-all"
+                    className="w-9 h-9 rounded-full cursor-pointer hover:ring-2 hover:ring-orange-500 transition-all"
                   />
                 ) : (
-                  <h1 className="text-white font-medium bg-purple-500 text-lg w-8 h-8 sm:w-10 sm:h-10 rounded-full flex items-center justify-center cursor-pointer hover:ring-2 hover:ring-purple-500 transition-all">
+                  <div className="text-white font-medium bg-purple-500 text-sm w-9 h-9 rounded-full flex items-center justify-center cursor-pointer hover:ring-2 hover:ring-purple-500 transition-all">
                     {user.displayName.charAt(0).toUpperCase()}
-                  </h1>
+                  </div>
                 )}
               </div>
               <button
                 onClick={handleLogout}
-                className="text-red-500 cursor-pointer font-medium text-sm px-3 sm:px-4 py-2 rounded-md transition-colors duration-200"
+                className="text-red-500 cursor-pointer font-medium text-sm px-3 sm:px-4 py-2 rounded-md hover:bg-red-50 transition-colors duration-200"
               >
                 Logout
               </button>
@@ -119,7 +131,7 @@ const Navbar = () => {
             <>
               <Link
                 to="/login"
-                className="text-gray-600 hover:text-gray-900 font-medium text-sm"
+                className="text-gray-600 hover:text-gray-900 font-medium text-sm px-4 py-2 rounded-md hover:bg-gray-100 transition-colors"
               >
                 Login
               </Link>
@@ -127,6 +139,51 @@ const Navbar = () => {
           )}
         </div>
       </div>
+
+      {/* Mobile Menu */}
+      {mobileMenuOpen && (
+        <div className="md:hidden bg-white border-t border-gray-200 px-4 py-4 space-y-3">
+          {links.map((link) => (
+            <Link
+              key={link.path}
+              to={link.path}
+              onClick={() => setMobileMenuOpen(false)}
+              className="block text-gray-600 hover:text-gray-900 font-medium text-sm py-2 px-3 rounded-md hover:bg-gray-100 transition-colors"
+            >
+              {link.label}
+            </Link>
+          ))}
+          
+          {user ? (
+            <div className="pt-3 border-t border-gray-200 space-y-3">
+              <Link
+                to="/profile"
+                onClick={() => setMobileMenuOpen(false)}
+                className="block text-gray-600 hover:text-gray-900 font-medium text-sm py-2 px-3 rounded-md hover:bg-gray-100 transition-colors"
+              >
+                Profile
+              </Link>
+              <button
+                onClick={() => {
+                  handleLogout();
+                  setMobileMenuOpen(false);
+                }}
+                className="w-full text-left text-red-500 cursor-pointer font-medium text-sm py-2 px-3 rounded-md hover:bg-red-50 transition-colors"
+              >
+                Logout
+              </button>
+            </div>
+          ) : (
+            <Link
+              to="/login"
+              onClick={() => setMobileMenuOpen(false)}
+              className="block text-gray-600 hover:text-gray-900 font-medium text-sm py-2 px-3 rounded-md hover:bg-gray-100 transition-colors"
+            >
+              Login
+            </Link>
+          )}
+        </div>
+      )}
     </nav>
   );
 };

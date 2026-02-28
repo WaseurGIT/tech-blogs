@@ -67,33 +67,24 @@ const BlogCard = ({ blog }) => {
 
   return (
     <Link to={`/blogs/${blog._id}`}>
-      <div className="cursor-pointer border-2 rounded-lg sm:rounded-xl md:rounded-2xl mb-4 sm:mb-6 hover:shadow-lg transition-shadow duration-200">
+      <div className="cursor-pointer border-2 rounded-lg sm:rounded-xl md:rounded-2xl mb-4 sm:mb-6 hover:shadow-lg transition-shadow duration-200 overflow-hidden h-full">
         <div className="">
           <div className="relative">
             <img
               src={`/uploads/${blog.imageOne}`}
               alt={blog.title}
-              className="w-full h-64 sm:h-80 md:h-96 lg:h-[500px] object-cover rounded-lg shadow-lg"
+              className="w-full h-48 sm:h-64 md:h-80 lg:h-96 object-cover rounded-lg shadow-lg"
             />
-            <span className="absolute top-2 sm:top-3 right-2 bg-white px-2 sm:px-4 py-1 rounded-lg text-xs sm:text-sm font-medium">
+            <span className="absolute top-2 sm:top-3 right-2 bg-white px-2 sm:px-4 py-1 rounded-lg text-xs sm:text-sm font-medium z-10">
               {blog.category}
             </span>
-            <div className="absolute bottom-2 left-2 flex items-center gap-2 w-full pr-4">
-              {/* <img
-                src={
-                  blog.authorImage
-                    ? blog.authorImage
-                    : "https://via.placeholder.com/150"
-                }
-                alt={blog.author}
-                className="w-10 h-10 rounded-full"
-              /> */}
+            <div className="absolute bottom-0 left-0 right-0 flex items-center gap-2 w-full px-2 sm:px-3 py-2 bg-gradient-to-t from-black via-black/50 to-transparent">
               <img
                 src={`/uploads/${blog.authorImage}`}
                 alt={blog.author}
-                className="w-10 h-10 rounded-full"
+                className="w-8 h-8 sm:w-10 sm:h-10 rounded-full flex-shrink-0"
               />
-              <h1 className="text-white font-bold text-xs sm:text-lg md:text-xl truncate">
+              <h1 className="text-white font-bold text-xs sm:text-base md:text-lg truncate">
                 {blog.title}
               </h1>
             </div>

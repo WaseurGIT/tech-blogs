@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const axiosSecure = axios.create({
-  baseURL: "https://tech-blog-server-theta.vercel.app/",
+  baseURL: "https://tech-blog-server-zaky.onrender.com",
 });
 
 axiosSecure.interceptors.request.use((config) => {
