@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const axiosSecure = axios.create({
-  baseURL: "https://tech-blog-server-zaky.onrender.com",
+  baseURL: "https://tech-blog-server-0qnc.onrender.com",
 });
 
 axiosSecure.interceptors.request.use((config) => {
