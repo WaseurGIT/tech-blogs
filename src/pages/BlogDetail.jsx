@@ -172,7 +172,7 @@ const BlogDetail = () => {
               </span>
             </div>
             <span className="bg-gray-200 text-gray-700 px-4 py-2 rounded-lg text-sm font-medium w-fit">
-              {blog.readTime} min
+              {blog.readTime} mins
             </span>
           </div>
 
@@ -184,7 +184,7 @@ const BlogDetail = () => {
           {/* Author Info */}
           <div className="flex items-center gap-4 mb-8 sm:mb-12">
             <img
-              src={`/uploads/${blog.authorImage}`}
+              src={`${import.meta.env.VITE_API_URL}/uploads/${blog.authorImage}`}
               alt={blog.author}
               className="w-10 h-10 sm:w-12 sm:h-12 rounded-full object-cover flex-shrink-0"
             />
@@ -219,30 +219,10 @@ const BlogDetail = () => {
           </div>
         </div>
 
-        {/* Main Image */}
-        <div className="mb-8 sm:mb-12 lg:mb-16">
-          <img
-            src={`/uploads/${blog.imageOne}`}
-            alt={blog.title}
-            className="w-full h-auto sm:h-96 md:h-full max-h-96 object-cover rounded-lg shadow-lg"
-          />
-        </div>
-
         {/* Content with Image Section */}
         <div className="mb-8 sm:mb-12 lg:mb-16">
           <p className="text-sm sm:text-base text-gray-700 leading-relaxed mb-6 sm:mb-8">
-            {blog.content.substring(0, blog.content.length / 2)}
-          </p>
-        </div>
-
-        <div className="mb-8 sm:mb-12 lg:mb-16">
-          <img
-            src={`/uploads/${blog.imageTwo}`}
-            alt={`${blog.title} - Image 1`}
-            className="w-full h-auto max-h-96 object-cover rounded-lg shadow-lg mb-6 sm:mb-8"
-          />
-          <p className="text-sm sm:text-base text-gray-700 leading-relaxed">
-            {blog.content.substring(blog.content.length / 2)}
+            {blog.content.substring(0, blog.content.length)}
           </p>
         </div>
 

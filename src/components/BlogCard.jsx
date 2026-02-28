@@ -67,44 +67,74 @@ const BlogCard = ({ blog }) => {
 
   return (
     <Link to={`/blogs/${blog._id}`}>
-      <div className="cursor-pointer border-2 rounded-lg sm:rounded-xl md:rounded-2xl mb-4 sm:mb-6 hover:shadow-lg transition-shadow duration-200 overflow-hidden h-full">
-        <div className="">
-          <div className="relative">
-            <img
-              src={`/uploads/${blog.imageOne}`}
-              alt={blog.title}
-              className="w-full h-48 sm:h-64 md:h-80 lg:h-96 object-cover rounded-lg shadow-lg"
-            />
-            <span className="absolute top-2 sm:top-3 right-2 bg-white px-2 sm:px-4 py-1 rounded-lg text-xs sm:text-sm font-medium z-10">
-              {blog.category}
+      <div className="group bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-lg transition-all duration-300 p-5 mb-3 hover:-translate-y-1">
+        {/* Author Section */}
+        <div className="flex items-center gap-3 mb-4">
+          <img
+            src={`${import.meta.env.VITE_API_URL}/uploads/${blog.authorImage}`}
+            alt={blog.author}
+            className="w-12 h-12 rounded-full object-cover border border-gray-200"
+          />
+
+          <div>
+            <p className="text-base font-semibold text-gray-800">
+              {blog.author}
+            </p>
+
+            {/* Date */}
+            <span className="text-sm">
+              {blog.publishedDate
+                ? new Date(blog.publishedDate).toLocaleDateString("en-BD", {
+                    year: "numeric",
+                    month: "long",
+                    day: "numeric",
+                  })
+                : ""}
             </span>
-            <div className="absolute bottom-0 left-0 right-0 flex items-center gap-2 w-full px-2 sm:px-3 py-2 bg-gradient-to-t from-black via-black/50 to-transparent">
-              <img
-                src={`/uploads/${blog.authorImage}`}
-                alt={blog.author}
-                className="w-8 h-8 sm:w-10 sm:h-10 rounded-full flex-shrink-0"
-              />
-              <h1 className="text-white font-bold text-xs sm:text-base md:text-lg truncate">
-                {blog.title}
-              </h1>
-            </div>
           </div>
-          <div className="flex items-center justify-between sm:justify-around my-2 sm:my-3 px-2 sm:px-0">
-            <div className="flex items-center gap-1">
-              <IoIosHeart className="w-5 h-5 sm:w-6 sm:h-6 cursor-pointer hover:text-red-500 transition" />
-              <span className="text-sm sm:text-base">{blog.likes || 0}</span>
+        </div>
+
+        {/* Blog Title */}
+        <h2 className="text-xl font-bold text-gray-800 group-hover:text-blue-600 transition mb-4 line-clamp-2">
+          {blog.title}
+        </h2>
+
+        <span className=" text-gray-700 text-sm font-medium mb-2">
+          {blog.readTime} mins
+        </span>
+
+        {/* Bottom Section */}
+        <div className="flex items-center justify-between pt-4 border-t border-gray-100">
+          {/* Stats */}
+          <div className="flex items-center gap-5 text-gray-600">
+            <div className="flex items-center gap-1 hover:text-red-500 transition">
+              <IoIosHeart className="w-5 h-5" />
+              <span className="text-sm font-medium">{blog.likes || 0}</span>
             </div>
-            <div className="flex items-center gap-1">
-              <FaRegComment className="w-5 h-5 sm:w-6 sm:h-6 cursor-pointer hover:text-blue-500 transition" />
-              <span className="text-sm sm:text-base">
+
+            <div className="flex items-center gap-1 hover:text-blue-500 transition">
+              <FaRegComment className="w-4 h-4" />
+              <span className="text-sm font-medium">
                 {blog.comments?.length || 0}
               </span>
             </div>
-            <CiBookmark
-              onClick={handleSavedBlog}
-              className="w-5 h-5 sm:w-6 sm:h-6 cursor-pointer hover:text-orange-500 transition"
-            />
-            <PiShareFatLight className="w-5 h-5 sm:w-6 sm:h-6 cursor-pointer hover:text-green-500 transition" />
+          </div>
+
+          {/* Actions */}
+          <div className="flex items-center gap-3">
+            <button
+              onClick={(e) => {
+                e.preventDefault();
+                handleSavedBlog(e);
+              }}
+              className="p-2 rounded-full bg-gray-100 hover:bg-orange-100 text-gray-600 hover:text-orange-500 transition-all duration-300"
+            >
+              <CiBookmark className="w-5 h-5" />
+            </button>
+
+            <button className="p-2 rounded-full bg-gray-100 hover:bg-green-100 text-gray-600 hover:text-green-500 transition-all duration-300">
+              <PiShareFatLight className="w-5 h-5" />
+            </button>
           </div>
         </div>
       </div>
