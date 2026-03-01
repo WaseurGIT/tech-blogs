@@ -16,6 +16,7 @@ import UserDataUpdateForm from "./pages/UserDataUpdateForm.jsx";
 import CreateBlog from "./pages/CreateBlog.jsx";
 import SavedBlogs from "./pages/SavedBlogs.jsx";
 import Error from "./pages/Error.jsx";
+import AdminDashboard from "./pages/AdminDashboard.jsx";
 
 const router = createBrowserRouter([
   {
@@ -58,6 +59,10 @@ const router = createBrowserRouter([
       {
         path: '/savedBlogs',
         element: <SavedBlogs />,
+      },
+      {
+        path: "/dashboard",
+        element: <AdminDashboard/>,
       }
     ],
   },
