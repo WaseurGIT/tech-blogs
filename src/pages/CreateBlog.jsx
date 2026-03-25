@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { AuthContext } from "../context/AuthProvider";
 import axiosSecure from "../api/axiosSecure";
 import Swal from "sweetalert2";
@@ -7,6 +7,18 @@ import { useNavigate } from "react-router-dom";
 const CreateBlog = () => {
   const { user } = useContext(AuthContext);
   const navigate = useNavigate();
+  const [blogImage, setBlogImage] = useState("");
+
+  const handleProfileImageChange =e =>{
+    const file = e.target.files[0]
+    if(file){
+      const reader = new FileReader()
+      reader.onloadend = ()=>{
+        setBlogImage(reader.result)
+      }
+      reader.readAsDataURL(file)
+    }
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -22,6 +34,7 @@ const CreateBlog = () => {
       category: form.category.value,
       readTime: form.readTime.value,
       content: form.content.value,
+      image: blogImage,
     };
 
     try {
@@ -48,7 +61,6 @@ const CreateBlog = () => {
         </h1>
 
         <form onSubmit={handleSubmit} className="space-y-6 sm:space-y-8">
-          {/* Title Input */}
           <div>
             <label
               htmlFor="title"
@@ -66,7 +78,6 @@ const CreateBlog = () => {
             />
           </div>
 
-          {/* Category Input */}
           <div>
             <label
               htmlFor="category"
@@ -92,7 +103,6 @@ const CreateBlog = () => {
             </select>
           </div>
 
-          {/* Read Time Input */}
           <div>
             <label
               htmlFor="readTime"
@@ -111,7 +121,6 @@ const CreateBlog = () => {
             />
           </div>
 
-          {/* Blog Content */}
           <div>
             <label
               htmlFor="content"
@@ -129,7 +138,20 @@ const CreateBlog = () => {
             />
           </div>
 
-          {/* Submit Button */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              Blog Image URL
+            </label>
+            <input
+              type="file"
+              name="blogImage"
+              accept="image/*"
+              onChange={handleProfileImageChange}
+              placeholder="https://example.com/blogImage.jpg"
+              className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
+            />
+          </div>
+
           <div>
             <button
               type="submit"

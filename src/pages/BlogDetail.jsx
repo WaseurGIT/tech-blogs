@@ -6,6 +6,7 @@ import { IoIosHeart } from "react-icons/io";
 import { AuthContext } from "../context/AuthProvider";
 import Swal from "sweetalert2";
 import axiosSecure from "../api/axiosSecure";
+import { LuClock3 } from "react-icons/lu";
 
 const BlogDetail = () => {
   const { user, role } = useContext(AuthContext);
@@ -152,9 +153,7 @@ const BlogDetail = () => {
           Back to Blogs
         </button>
 
-        {/* Header Section */}
         <div className="mb-8 sm:mb-12 lg:mb-16">
-          {/* Category and Date */}
           <div className="flex flex-col gap-3 sm:flex-row sm:gap-6 sm:items-center mb-4 flex-wrap">
             <span className="bg-orange-100 text-orange-600 px-4 py-2 rounded-lg text-sm font-semibold w-fit">
               {blog.category}
@@ -171,18 +170,17 @@ const BlogDetail = () => {
                   : ""}
               </span>
             </div>
-            <span className="bg-gray-200 text-gray-700 px-4 py-2 rounded-lg text-sm font-medium w-fit">
+            <span className="flex items-center gap-2 bg-gray-200 text-gray-700 px-4 py-2 rounded-lg text-sm font-medium w-fit">
+              <LuClock3 />
               {blog.readTime} mins
             </span>
           </div>
 
-          {/* Title */}
           <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-4 sm:mb-6 leading-tight">
             {blog.title}
           </h1>
 
-          {/* Author Info */}
-          <div className="flex items-center gap-4 mb-8 sm:mb-12">
+          <div className="flex items-center gap-4 mb-2 sm:mb-8">
             <img
               src={`${import.meta.env.VITE_API_URL}/uploads/${blog.authorImage}`}
               alt={blog.author}
@@ -195,7 +193,6 @@ const BlogDetail = () => {
             </div>
           </div>
 
-          {/* Stats */}
           <div className="flex flex-wrap gap-4 sm:gap-8 text-sm sm:text-base">
             <div className="flex items-center gap-2">
               <IoIosHeart
@@ -219,14 +216,20 @@ const BlogDetail = () => {
           </div>
         </div>
 
-        {/* Content with Image Section */}
+        <div className="mb-8 sm:mb-12 lg:mb-16">
+          <img
+            src={blog.image}
+            alt={blog.title}
+            className="w-full h-auto object-cover rounded-lg"
+          />
+        </div>
+
         <div className="mb-8 sm:mb-12 lg:mb-16">
           <p className="text-sm sm:text-base text-gray-700 leading-relaxed mb-6 sm:mb-8">
             {blog.content.substring(0, blog.content.length)}
           </p>
         </div>
 
-        {/* Comments Section */}
         <div className="pt-8 sm:pt-12 border-t border-gray-200">
           <h2 className="text-2xl sm:text-3xl font-bold mb-8 text-gray-900">
             Comments ({blog.comments?.length || 0})
@@ -260,7 +263,6 @@ const BlogDetail = () => {
               ))}
           </div>
 
-          {/* Add Comment Section */}
           <div className="pt-6 sm:pt-8 border-t border-gray-200">
             <h3 className="text-lg sm:text-xl font-bold mb-4 text-gray-900">
               Leave a Comment
@@ -284,7 +286,6 @@ const BlogDetail = () => {
           </div>
         </div>
 
-        {/* Delete Button - Admin Only */}
         {role === "admin" && (
           <div className="mt-8 sm:mt-12">
             <button

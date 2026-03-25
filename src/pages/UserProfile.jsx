@@ -54,7 +54,8 @@ const UserProfile = () => {
       {/* Cover Image */}
       <div className="relative w-full h-40 sm:h-56 md:h-64 lg:h-80 bg-gray-300 overflow-hidden">
         <img
-          src={`/uploads/${userData?.coverImage}`}
+          // src={`/uploads/${userData?.coverImage}`}
+          src={userData?.coverImage}
           alt="Cover"
           className="w-full h-full object-cover"
         />
@@ -69,7 +70,8 @@ const UserProfile = () => {
             <div className="flex justify-center sm:justify-start mb-6 sm:mb-0">
               <div className="relative">
                 <img
-                  src={`/uploads/${userData?.profilePicture}`}
+                  // src={`/uploads/${userData?.profilePicture}`}
+                  src={userData?.profilePicture}
                   alt={userData?.name}
                   className="w-28 h-28 sm:w-36 sm:h-36 md:w-40 md:h-40 rounded-full border-4 sm:border-4 border-white shadow-lg object-cover"
                 />

@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
-import { AuthContext } from "../context/AuthProvider";
-import axiosSecure from "../api/axiosSecure";
+import { AuthContext } from "../../context/AuthProvider";
+import axiosSecure from "../../api/axiosSecure";
 import { useNavigate } from "react-router-dom";
 
 const AdminDashboard = () => {
